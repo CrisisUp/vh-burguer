@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Entre em contato com a VH Burger. Tire dúvidas, faça sugestões ou envie sua mensagem.">
+    <!-- ===== OPEN GRAPH ===== -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Contato - VH Burger">
+    <meta property="og:description"
+        content="Entre em contato com a VH Burger. Tire dúvidas, faça sugestões ou envie sua mensagem.">
+    <meta property="og:image" content="img/og-contato.jpg">
+    <meta property="og:url" content="https://vhburger.com.br/contato.html">
+    <meta property="og:site_name" content="VH Burger">
+    <meta property="og:locale" content="pt_BR">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Contato - VH Burger">
+    <meta name="twitter:description" content="Fale conosco!">
+    <meta name="twitter:image" content="img/og-contato.jpg">
+    <title>Contato - VH Burger</title>
+</head>
+
+<body>
+
+    <!-- ===== CABEÇALHO E NAVEGAÇÃO ===== -->
+    <header>
+        <h1>VH Burger</h1>
+        <nav aria-label="Navegação principal">
+            <a href="index.html">Home</a> |
+            <a href="cardapio.html">Cardápio</a> |
+            <a href="sobre.html">Sobre</a> |
+            <a href="contato.html">Contato</a>
+        </nav>
+    </header>
+
+    <hr>
+
+    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+    <main>
+
+        <!-- APRESENTAÇÃO -->
+        <section>
+            <h2>Fale Conosco</h2>
+            <p>
+                Estamos à disposição para atender você! Seja para tirar dúvidas,
+                fazer sugestões ou <em>elogiar nossos hambúrgueres</em>,
+                preencha o formulário abaixo ou use um dos nossos canais diretos.
+            </p>
+        </section>
+
+        <hr>
+
+        <!-- ===== FORMULÁRIO DE CONTATO ===== -->
+        <section>
+            <h3>📝 Envie sua Mensagem</h3>
+
+            <form action="#" method="post">
+
+                <!-- GRUPO 1: DADOS PESSOAIS -->
+                <fieldset>
+                    <legend>Dados Pessoais</legend>
+
+                    <p>
+                        <label for="nome">Nome completo: *</label><br>
+                        <input type="text" id="nome" name="nome" placeholder="Ex: João da Silva" required minlength="3"
+                            maxlength="80">
+                    </p>
+
+                    <p>
+                        <label for="email">E-mail: *</label><br>
+                        <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com" required>
+                    </p>
+
+                    <p>
+                        <label for="telefone">Telefone:</label><br>
+                        <input type="tel" id="telefone" name="telefone" placeholder="(11) 99999-9999"
+                            pattern="\([0-9]{2}\) [0-9]{4,5}-[0-9]{4}">
+                    </p>
+                </fieldset>
+
+                <br>
+
+                <!-- GRUPO 2: MENSAGEM -->
+                <fieldset>
+                    <legend>Mensagem</legend>
+
+                    <p>
+                        <label for="assunto">Assunto: *</label><br>
+                        <select id="assunto" name="assunto" required>
+                            <option value="">-- Selecione uma opção --</option>
+                            <option value="duvida">Dúvida</option>
+                            <option value="sugestao">Sugestão</option>
+                            <option value="elogio">Elogio</option>
+                            <option value="reclamacao">Reclamação</option>
+                            <option value="reserva">Reserva de mesa</option>
+                            <option value="outro">Outro</option>
+                        </select>
+                    </p>
+
+                    <p>
+                        <label for="mensagem">Mensagem: *</label><br>
+                        <textarea id="mensagem" name="mensagem" rows="6" cols="50"
+                            placeholder="Escreva sua mensagem aqui..." required minlength="10"
+                            maxlength="500"></textarea>
+                    </p>
+                </fieldset>
+
+                <br>
+
+                <!-- GRUPO 3: PREFERÊNCIAS -->
+                <fieldset>
+                    <legend>Preferências</legend>
+
+                    <p>
+                        <input type="checkbox" id="newsletter" name="newsletter" checked>
+                        <label for="newsletter">Desejo receber novidades e promoções por e-mail</label>
+                    </p>
+
+                    <p>Como nos conheceu?</p>
+                    <p>
+                        <input type="radio" id="instagram" name="origem" value="instagram">
+                        <label for="instagram">Instagram</label><br>
+
+                        <input type="radio" id="indicacao" name="origem" value="indicacao">
+                        <label for="indicacao">Indicação de amigo</label><br>
+
+                        <input type="radio" id="google" name="origem" value="google">
+                        <label for="google">Google</label><br>
+
+                        <input type="radio" id="outro-origem" name="origem" value="outro">
+                        <label for="outro-origem">Outro</label>
+                    </p>
+                </fieldset>
+
+                <br>
+
+                <!-- BOTÕES -->
+                <p>
+                    <button type="submit">📨 Enviar Mensagem</button>
+                    <button type="reset">🔄 Limpar Formulário</button>
+                </p>
+
+            </form>
+        </section>
+
+        <hr>
+
+        <!-- ===== INFORMAÇÕES DE CONTATO DIRETO ===== -->
+        <section>
+            <h3>📍 Outros Canais de Contato</h3>
+
+            <address>
+                <strong>VH Burger</strong><br>
+                Rua dos Hambúrgueres, 123<br>
+                Bairro Centro<br>
+                São Paulo/SP — CEP: 01000-000<br>
+                <br>
+                📞 <a href="tel:+5511999999999">(11) 99999-9999</a><br>
+                📧 <a href="mailto:contato@vhburger.com.br">contato@vhburger.com.br</a>
+            </address>
+        </section>
+
+        <hr>
+
+        <!-- ===== HORÁRIO ===== -->
+        <section>
+            <h3>🕐 Horário de Funcionamento</h3>
+            <ul>
+                <li><strong>Terça a Quinta:</strong> <time>18:00</time> às <time>23:00</time></li>
+                <li><strong>Sexta e Sábado:</strong> <time>18:00</time> às <time>00:00</time></li>
+                <li><strong>Domingo:</strong> <time>18:00</time> às <time>22:00</time></li>
+                <li><em>Segunda-feira: Fechado</em></li>
+            </ul>
+        </section>
+
+        <hr>
+
+        <!-- ===== REDES SOCIAIS ===== -->
+        <section>
+            <h3>🌐 Redes Sociais</h3>
+            <ul>
+                <li><a href="#">Instagram: @vhburger</a></li>
+                <li><a href="#">Facebook: /vhburger</a></li>
+                <li><a href="#">TikTok: @vhburger</a></li>
+            </ul>
+        </section>
+
+        <hr>
+
+        <!-- ===== FAQ RÁPIDO ===== -->
+        <section>
+            <h3>❓ Perguntas Frequentes</h3>
+
+            <details>
+                <summary>Vocês fazem entrega?</summary>
+                <p>Sim! Entregamos em toda a região central em até 40 minutos. Taxa de entrega: R$ 5,00.</p>
+            </details>
+
+            <details>
+                <summary>Aceitam quais formas de pagamento?</summary>
+                <p>Dinheiro, cartão de débito, crédito e PIX.</p>
+            </details>
+
+            <details>
+                <summary>Tem opções vegetarianas?</summary>
+                <p>Sim! Temos o VH Veggie, feito com hambúrguer de grão-de-bico.</p>
+            </details>
+
+        </section>
+
+    </main>
+
+    <hr>
+
+    <!-- ===== RODAPÉ ===== -->
+    <footer>
+        <p><small>&copy; 2026 VH Burger. Todos os direitos reservados.</small></p>
+        <p><a href="index.html">Voltar para a página inicial</a></p>
+    </footer>
+
+</body>
+
+</html>
