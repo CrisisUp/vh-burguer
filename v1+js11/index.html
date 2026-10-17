@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VH Burger - Design Patterns (js10)</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 10px;
+        }
+
+        .produto {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .produto.esgotado {
+            opacity: 0.5;
+        }
+
+        .produto .preco {
+            color: green;
+            font-weight: bold;
+        }
+
+        .btn-carrinho {
+            background: #ffcc00;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .btn-carrinho:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        #lista-carrinho div {
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .erro {
+            color: red;
+            font-size: 0.85em;
+            display: none;
+            margin-top: 5px;
+        }
+
+        .erro.ativo {
+            display: block;
+        }
+
+        .campo-invalido {
+            border: 2px solid red;
+        }
+
+        .campo-valido {
+            border: 2px solid green;
+        }
+
+        .sucesso {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+            margin-bottom: 20px;
+        }
+
+        .sucesso.ativo {
+            display: block;
+        }
+
+        .erro-rede {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .erro-rede.ativo {
+            display: block;
+        }
+
+        #loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        #secao-checkout {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>VH Burger - Design Patterns</h1>
+
+    <h2>Nosso Cardápio</h2>
+
+    <p>
+        <input type="text" id="busca" placeholder="🔍 Buscar produto...">
+    </p>
+    <p>
+        <button class="btn-filtro" data-categoria="todos">Todos</button>
+        <button class="btn-filtro" data-categoria="hamburguer">🍔 Hambúrgueres</button>
+        <button class="btn-filtro" data-categoria="acompanhamento">🍟 Acompanhamentos</button>
+        <button class="btn-filtro" data-categoria="bebida">🥤 Bebidas</button>
+    </p>
+
+    <div id="loading">⏳ Carregando cardápio...</div>
+    <div id="erro-rede" class="erro-rede">❌ Erro ao carregar os produtos.</div>
+    <div id="lista-produtos"></div>
+
+    <hr>
+
+    <h2>🛒 Seu Carrinho</h2>
+    <p>Itens: <strong><span id="qtd-carrinho">0</span></strong></p>
+    <p>Total: <strong>R$ <span id="total-carrinho">0,00</span></strong></p>
+
+    <div id="lista-carrinho"></div>
+
+    <p>
+        <button id="btn-limpar">🗑️ Limpar Carrinho</button>
+        <button id="btn-ir-checkout"
+            style="background: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+            ➡️ Ir para o Checkout
+        </button>
+    </p>
+
+    <hr>
+
+    <section id="secao-checkout">
+        <h2>💳 Finalizar Pedido</h2>
+
+        <div id="mensagem-sucesso" class="sucesso">
+            🎉 Pedido realizado com sucesso!
+        </div>
+
+        <form id="form-pedido" novalidate>
+            <div class="form-group">
+                <label for="nome">Nome completo: *</label>
+                <input type="text" id="nome">
+                <span class="erro" id="erro-nome">O nome deve ter pelo menos 3 letras.</span>
+            </div>
+
+            <div class="form-group">
+                <label for="telefone">Telefone: *</label>
+                <input type="text" id="telefone" maxlength="15">
+                <span class="erro" id="erro-telefone">Formato inválido.</span>
+            </div>
+
+            <div class="form-group">
+                <label for="endereco">Endereço completo: *</label>
+                <input type="text" id="endereco">
+                <span class="erro" id="erro-endereco">Preencha o endereço completo (mín. 10).</span>
+            </div>
+
+            <!-- ✅ MUDANÇA: o select de pagamento vem ANTES do botão -->
+            <div class="form-group">
+                <label for="pagamento">Forma de pagamento: *</label>
+                <select id="pagamento">
+                    <option value="">-- Selecione --</option>
+                    <option value="pix">PIX</option>
+                    <option value="cartao">Cartão de Crédito/Débito</option>
+                    <option value="dinheiro">Dinheiro</option>
+                </select>
+                <span class="erro" id="erro-pagamento">Escolha uma forma de pagamento.</span>
+            </div>
+
+            <button type="submit"
+                style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px;">
+                ✅ Confirmar Pedido
+            </button>
+        </form>
+    </section>
+
+    <!-- O ÚNICO SCRIPT: Chama o módulo principal -->
+    <script type="module" src="js/main.js"></script>
+
+</body>
+
+</html>

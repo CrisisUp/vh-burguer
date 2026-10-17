@@ -1,0 +1,14 @@
+{
+  "name": "vh-burger-tests",
+  "version": "1.0.0",
+  "description": "Testes unitários da VH Burger",
+  "type": "module",
+  "scripts": {
+    "test": "node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:watch": "node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
+    "test:coverage": "node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}

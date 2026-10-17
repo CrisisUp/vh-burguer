@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VH Burger - Checkout (js4)</title>
+    <style>
+        /* Estilos básicos para visualização */
+        body {
+            font-family: sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .erro {
+            color: red;
+            font-size: 0.85em;
+            display: none;
+            margin-top: 5px;
+        }
+
+        .erro.ativo {
+            display: block;
+        }
+
+        .campo-invalido {
+            border: 2px solid red;
+        }
+
+        .campo-valido {
+            border: 2px solid green;
+        }
+
+        .sucesso {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .sucesso.ativo {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>VH Burger - Finalizar Pedido</h1>
+
+    <!-- ===== MENSAGEM DE SUCESSO (escondida inicialmente) ===== -->
+    <div id="mensagem-sucesso" class="sucesso">
+        🎉 Pedido realizado com sucesso! Em breve entraremos em contato.
+    </div>
+
+    <!-- ===== FORMULÁRIO DE CHECKOUT ===== -->
+    <form id="form-pedido" novalidate>
+        <!-- O atributo novalidate desativa a validação padrão do navegador
+             para que possamos testar a nossa própria validação via JS -->
+
+        <!-- GRUPO 1: DADOS PESSOAIS -->
+        <h2>1. Dados Pessoais</h2>
+
+        <div class="form-group">
+            <label for="nome">Nome completo: *</label>
+            <input type="text" id="nome" name="nome" placeholder="Ex: João da Silva">
+            <span class="erro" id="erro-nome">O nome deve ter pelo menos 3 letras.</span>
+        </div>
+
+        <div class="form-group">
+            <label for="telefone">Telefone / WhatsApp: *</label>
+            <input type="text" id="telefone" name="telefone" placeholder="(11) 99999-9999" maxlength="15">
+            <span class="erro" id="erro-telefone">Formato inválido. Use (XX) XXXXX-XXXX.</span>
+        </div>
+
+        <!-- GRUPO 2: ENDEREÇO -->
+        <h2>2. Endereço de Entrega</h2>
+
+        <div class="form-group">
+            <label for="cep">CEP: *</label>
+            <input type="text" id="cep" name="cep" placeholder="12345-678" maxlength="9">
+            <span class="erro" id="erro-cep">Formato inválido. Use 12345-678.</span>
+        </div>
+
+        <div class="form-group">
+            <label for="endereco">Endereço completo: *</label>
+            <input type="text" id="endereco" name="endereco" placeholder="Rua, número, bairro...">
+            <span class="erro" id="erro-endereco">Preencha o endereço completo (mín. 10 caracteres).</span>
+        </div>
+
+        <!-- GRUPO 3: PAGAMENTO -->
+        <h2>3. Pagamento</h2>
+
+        <div class="form-group">
+            <label for="pagamento">Forma de pagamento: *</label>
+            <select id="pagamento" name="pagamento">
+                <option value="">-- Selecione --</option>
+                <option value="pix">PIX</option>
+                <option value="cartao">Cartão de Crédito/Débito</option>
+                <option value="dinheiro">Dinheiro (na entrega)</option>
+            </select>
+            <span class="erro" id="erro-pagamento">Escolha uma forma de pagamento.</span>
+        </div>
+
+        <button type="submit" style="padding: 10px 20px; font-size: 1.1em; cursor: pointer;">
+            ✅ Finalizar Pedido
+        </button>
+    </form>
+
+    <hr>
+    <footer>
+        <p><small>&copy; 2026 VH Burger.</small></p>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // ============================================================
+        // 1. SELEÇÃO DE ELEMENTOS
+        // ============================================================
+        const form = document.getElementById("form-pedido");
+        const msgSucesso = document.getElementById("mensagem-sucesso");
+
+        // Campos
+        const inputNome = document.getElementById("nome");
+        const inputTelefone = document.getElementById("telefone");
+        const inputCep = document.getElementById("cep");
+        const inputEndereco = document.getElementById("endereco");
+        const selectPagamento = document.getElementById("pagamento");
+
+        // ============================================================
+        // 2. MÁSCARAS DE DIGITAÇÃO (BÔNUS)
+        // ============================================================
+        // Aplica máscara no telefone enquanto digita
+        inputTelefone.addEventListener("input", function (e) {
+            let valor = e.target.value.replace(/\D/g, ""); // Remove tudo que não for número
+            valor = valor.substring(0, 11); // Limita a 11 dígitos
+
+            // Formata: (11) 99999-9999
+            if (valor.length > 10) {
+                valor = valor.replace(/^(\d{2})(\d{5})(\d{4}).*/, "($1) $2-$3");
+            } else if (valor.length > 6) {
+                valor = valor.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, "($1) $2-$3");
+            } else if (valor.length > 2) {
+                valor = valor.replace(/^(\d{2})(\d{0,5})/, "($1) $2");
+            } else if (valor.length > 0) {
+                valor = valor.replace(/^(\d*)/, "($1");
+            }
+            e.target.value = valor;
+        });
+
+        // Aplica máscara no CEP
+        inputCep.addEventListener("input", function (e) {
+            let valor = e.target.value.replace(/\D/g, "");
+            valor = valor.substring(0, 8);
+            if (valor.length > 5) {
+                valor = valor.replace(/^(\d{5})(\d{0,3})/, "$1-$2");
+            }
+            e.target.value = valor;
+        });
+
+        // ============================================================
+        // 3. FUNÇÕES DE VALIDAÇÃO INDIVIDUAL
+        // ============================================================
+        // Cada função retorna true (válido) ou false (inválido)
+        // E mostra/esconde a mensagem de erro correspondente.
+
+        function validarNome() {
+            const valor = inputNome.value.trim();
+            const erro = document.getElementById("erro-nome");
+
+            if (valor.length >= 3) {
+                inputNome.classList.add("campo-valido");
+                inputNome.classList.remove("campo-invalido");
+                erro.classList.remove("ativo");
+                return true;
+            } else {
+                inputNome.classList.add("campo-invalido");
+                inputNome.classList.remove("campo-valido");
+                erro.classList.add("ativo");
+                return false;
+            }
+        }
+
+        function validarTelefone() {
+            const valor = inputTelefone.value.trim();
+            const erro = document.getElementById("erro-telefone");
+
+            // Expressão Regular: (XX) XXXXX-XXXX ou (XX) XXXX-XXXX
+            const regex = /^\(\d{2}\) \d{4,5}-\d{4}$/;
+
+            if (regex.test(valor)) {
+                inputTelefone.classList.add("campo-valido");
+                inputTelefone.classList.remove("campo-invalido");
+                erro.classList.remove("ativo");
+                return true;
+            } else {
+                inputTelefone.classList.add("campo-invalido");
+                inputTelefone.classList.remove("campo-valido");
+                erro.classList.add("ativo");
+                return false;
+            }
+        }
+
+        function validarCep() {
+            const valor = inputCep.value.trim();
+            const erro = document.getElementById("erro-cep");
+
+            // Expressão Regular: 12345-678
+            const regex = /^\d{5}-\d{3}$/;
+
+            if (regex.test(valor)) {
+                inputCep.classList.add("campo-valido");
+                inputCep.classList.remove("campo-invalido");
+                erro.classList.remove("ativo");
+                return true;
+            } else {
+                inputCep.classList.add("campo-invalido");
+                inputCep.classList.remove("campo-valido");
+                erro.classList.add("ativo");
+                return false;
+            }
+        }
+
+        function validarEndereco() {
+            const valor = inputEndereco.value.trim();
+            const erro = document.getElementById("erro-endereco");
+
+            if (valor.length >= 10) {
+                inputEndereco.classList.add("campo-valido");
+                inputEndereco.classList.remove("campo-invalido");
+                erro.classList.remove("ativo");
+                return true;
+            } else {
+                inputEndereco.classList.add("campo-invalido");
+                inputEndereco.classList.remove("campo-valido");
+                erro.classList.add("ativo");
+                return false;
+            }
+        }
+
+        function validarPagamento() {
+            const valor = selectPagamento.value;
+            const erro = document.getElementById("erro-pagamento");
+
+            if (valor !== "") {
+                selectPagamento.classList.add("campo-valido");
+                selectPagamento.classList.remove("campo-invalido");
+                erro.classList.remove("ativo");
+                return true;
+            } else {
+                selectPagamento.classList.add("campo-invalido");
+                selectPagamento.classList.remove("campo-valido");
+                erro.classList.add("ativo");
+                return false;
+            }
+        }
+
+        // ============================================================
+        // 4. VALIDAÇÃO EM TEMPO REAL (BÔNUS)
+        // ============================================================
+        // Valida enquanto o usuário digita ou sai do campo (blur)
+        inputNome.addEventListener("blur", validarNome);
+        inputTelefone.addEventListener("blur", validarTelefone);
+        inputCep.addEventListener("blur", validarCep);
+        inputEndereco.addEventListener("blur", validarEndereco);
+        selectPagamento.addEventListener("change", validarPagamento);
+
+        // ============================================================
+        // 5. CAPTURAR O ENVIO DO FORMULÁRIO
+        // ============================================================
+        form.addEventListener("submit", function (event) {
+            // IMPEDE que a página recarregue
+            event.preventDefault();
+
+            // Executa TODAS as validações
+            const nomeOk = validarNome();
+            const telefoneOk = validarTelefone();
+            const cepOk = validarCep();
+            const enderecoOk = validarEndereco();
+            const pagamentoOk = validarPagamento();
+
+            // Verifica se TODOS passaram
+            const tudoValido = nomeOk && telefoneOk && cepOk && enderecoOk && pagamentoOk;
+
+            if (tudoValido) {
+                // SUCESSO!
+                console.log("✅ Formulário válido. Dados:");
+                console.log("Nome:", inputNome.value);
+                console.log("Telefone:", inputTelefone.value);
+                console.log("CEP:", inputCep.value);
+                console.log("Endereço:", inputEndereco.value);
+                console.log("Pagamento:", selectPagamento.value);
+
+                // Mostra mensagem de sucesso
+                msgSucesso.classList.add("ativo");
+
+                // Limpa o formulário
+                form.reset();
+
+                // Remove as cores dos campos
+                document.querySelectorAll(".campo-valido").forEach(el => el.classList.remove("campo-valido"));
+
+                // Esconde a mensagem após 4 segundos
+                setTimeout(() => {
+                    msgSucesso.classList.remove("ativo");
+                }, 4000);
+
+            } else {
+                // ERRO! Encontra o primeiro campo inválido
+                console.log("❌ Formulário tem erros.");
+
+                // Foca no primeiro campo com erro
+                const primeiroInvalido = form.querySelector(".campo-invalido");
+                if (primeiroInvalido) {
+                    primeiroInvalido.focus();
+                }
+            }
+        });
+
+        console.log("🍔 v1+js4 carregado!");
+    </script>
+
+</body>
+
+</html>

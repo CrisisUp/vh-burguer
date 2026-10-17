@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "nome": "VH Clássico",
+        "descricao": "Pão brioche, blend 180g, queijo cheddar, alface e tomate",
+        "preco": 28.00,
+        "categoria": "hamburguer",
+        "esgotado": false
+    },
+    {
+        "id": 2,
+        "nome": "VH Bacon",
+        "descricao": "Blend 180g, cheddar, bacon crocante e molho barbecue",
+        "preco": 32.00,
+        "categoria": "hamburguer",
+        "esgotado": false
+    },
+    {
+        "id": 3,
+        "nome": "VH Veggie",
+        "descricao": "Hambúrguer de grão-de-bico, queijo minas e rúcula",
+        "preco": 30.00,
+        "categoria": "hamburguer",
+        "esgotado": true
+    },
+    {
+        "id": 4,
+        "nome": "Batata Rústica",
+        "descricao": "Batatas com casca e temperos especiais",
+        "preco": 18.00,
+        "categoria": "acompanhamento",
+        "esgotado": false
+    },
+    {
+        "id": 5,
+        "nome": "Refrigerante Lata",
+        "descricao": "Coca-Cola, Guaraná ou Fanta (350ml)",
+        "preco": 7.00,
+        "categoria": "bebida",
+        "esgotado": false
+    }
+]

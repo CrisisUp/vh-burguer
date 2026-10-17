@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VH Burger - Cardápio Seguro (js3)</title>
+    <style>
+        /* Estilo mínimo para visualizar a diferença */
+        .produto {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .produto.esgotado {
+            opacity: 0.5;
+        }
+
+        .produto .preco {
+            color: green;
+            font-weight: bold;
+        }
+
+        .btn-carrinho {
+            background: #ffcc00;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== CABEÇALHO ===== -->
+    <h1>VH Burger</h1>
+    <nav>
+        <a href="index.html">Home</a> |
+        <a href="#cardapio">Cardápio</a> |
+        <a href="#contato">Contato</a>
+    </nav>
+
+    <hr>
+
+    <!-- ===== SAUDAÇÃO ===== -->
+    <p id="saudacao"></p>
+
+    <!-- ===== SEÇÃO DO CARDÁPIO ===== -->
+    <h2 id="cardapio">Nosso Cardápio</h2>
+
+    <!-- Busca e filtros -->
+    <p>
+        <label for="busca">🔍 Buscar:</label>
+        <input type="text" id="busca" placeholder="Ex: bacon, veggie...">
+    </p>
+
+    <p>
+        <button class="btn-filtro" data-categoria="todos">Todos</button>
+        <button class="btn-filtro" data-categoria="hamburguer">🍔 Hambúrgueres</button>
+        <button class="btn-filtro" data-categoria="acompanhamento">🍟 Acompanhamentos</button>
+        <button class="btn-filtro" data-categoria="bebida">🥤 Bebidas</button>
+    </p>
+
+    <!-- Container dos produtos (vai ser preenchido via JS) -->
+    <div id="lista-produtos"></div>
+
+    <hr>
+
+    <!-- ===== CARRINHO ===== -->
+    <h2>🛒 Seu Carrinho</h2>
+    <p>
+        Itens no carrinho: <strong><span id="qtd-carrinho">0</span></strong>
+    </p>
+    <p>
+        Total: <strong>R$ <span id="total-carrinho">0,00</span></strong>
+    </p>
+    <div id="lista-carrinho"></div>
+    <button id="btn-limpar">🗑️ Limpar Carrinho</button>
+
+    <hr>
+
+    <footer>
+        <p><small>&copy; 2026 VH Burger. Todos os direitos reservados.</small></p>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // ============================================================
+        // 1. SAUDAÇÃO (reaproveitada do js1)
+        // ============================================================
+        const hora = new Date().getHours();
+        let saudacao = "";
+
+        if (hora >= 5 && hora < 12) saudacao = "☀️ Bom dia!";
+        else if (hora >= 12 && hora < 18) saudacao = "🌤️ Boa tarde!";
+        else saudacao = "🌙 Boa noite!";
+
+        document.getElementById("saudacao").textContent =
+            `${saudacao} Bem-vindo à VH Burger!`;
+
+        // ============================================================
+        // 2. CARDÁPIO (mesmo do js2)
+        // ============================================================
+        const produtos = [
+            { id: 1, nome: "VH Clássico", descricao: "Pão brioche, blend 180g, cheddar, alface e tomate", preco: 28.00, categoria: "hamburguer", esgotado: false },
+            { id: 2, nome: "VH Bacon", descricao: "Blend 180g, cheddar, bacon crocante e barbecue", preco: 32.00, categoria: "hamburguer", esgotado: false },
+            { id: 3, nome: "VH Veggie", descricao: "Hambúrguer de grão-de-bico, queijo minas e rúcula", preco: 30.00, categoria: "hamburguer", esgotado: true },
+            { id: 4, nome: "Batata Rústica", descricao: "Batatas com casca e temperos especiais", preco: 18.00, categoria: "acompanhamento", esgotado: false },
+            { id: 5, nome: "Onion Rings", descricao: "Anéis de cebola empanados (8 un.)", preco: 16.00, categoria: "acompanhamento", esgotado: false },
+            { id: 6, nome: "Refrigerante Lata", descricao: "Coca-Cola, Guaraná ou Fanta (350ml)", preco: 7.00, categoria: "bebida", esgotado: false },
+            { id: 7, nome: "Milkshake", descricao: "Chocolate, morango ou ovomaltine (400ml)", preco: 18.00, categoria: "bebida", esgotado: false }
+        ];
+
+        // ============================================================
+        // 3. ESTADO
+        // ============================================================
+        let categoriaAtual = "todos";
+        let termoBusca = "";
+
+        // Recupera carrinho do localStorage ou começa vazio
+        let carrinho = JSON.parse(localStorage.getItem("vh-carrinho")) || [];
+
+        // ============================================================
+        // 4. RENDERIZAR PRODUTOS COM createElement (NOVO!)
+        // ============================================================
+        const containerProdutos = document.getElementById("lista-produtos");
+
+        function renderizarProdutos() {
+            // Limpa o container ANTES de adicionar novos
+            containerProdutos.innerHTML = "";
+
+            // Filtra por categoria
+            let listaFiltrada = produtos;
+            if (categoriaAtual !== "todos") {
+                listaFiltrada = listaFiltrada.filter(p => p.categoria === categoriaAtual);
+            }
+
+            // Filtra por busca
+            if (termoBusca !== "") {
+                listaFiltrada = listaFiltrada.filter(p =>
+                    p.nome.toLowerCase().includes(termoBusca.toLowerCase())
+                );
+            }
+
+            // Se vazio, mostra mensagem
+            if (listaFiltrada.length === 0) {
+                const msg = document.createElement("p");
+                msg.textContent = "Nenhum produto encontrado. 😕";
+                containerProdutos.appendChild(msg);
+                return;
+            }
+
+            // Para cada produto, cria a estrutura DOM
+            listaFiltrada.forEach(produto => {
+                // Cria a div principal
+                const div = document.createElement("div");
+                div.classList.add("produto");
+                if (produto.esgotado) div.classList.add("esgotado");
+
+                // Cria o <h3> com o nome
+                const h3 = document.createElement("h3");
+                h3.textContent = produto.nome;
+
+                // Cria o <p> com a descrição
+                const pDesc = document.createElement("p");
+                pDesc.textContent = produto.descricao;
+
+                // Cria o <p> com o preço
+                const pPreco = document.createElement("p");
+                pPreco.classList.add("preco");
+                pPreco.textContent = `R$ ${produto.preco.toFixed(2).replace(".", ",")}`;
+
+                // Cria o botão "Adicionar ao carrinho"
+                const btn = document.createElement("button");
+                btn.classList.add("btn-carrinho");
+                btn.textContent = produto.esgotado ? "❌ Esgotado" : "➕ Adicionar";
+                btn.disabled = produto.esgotado; // desabilita se esgotado
+
+                // Evento do botão
+                if (!produto.esgotado) {
+                    btn.addEventListener("click", function () {
+                        adicionarAoCarrinho(produto.id);
+                    });
+                }
+
+                // Monta a div
+                div.appendChild(h3);
+                div.appendChild(pDesc);
+                div.appendChild(pPreco);
+                div.appendChild(btn);
+
+                // Adiciona ao container
+                containerProdutos.appendChild(div);
+            });
+        }
+
+        // ============================================================
+        // 5. FILTROS E BUSCA
+        // ============================================================
+        document.querySelectorAll(".btn-filtro").forEach(btn => {
+            btn.addEventListener("click", () => {
+                categoriaAtual = btn.dataset.categoria;
+                renderizarProdutos();
+            });
+        });
+
+        document.getElementById("busca").addEventListener("input", function () {
+            termoBusca = this.value;
+            renderizarProdutos();
+        });
+
+        // ============================================================
+        // 6. ADICIONAR AO CARRINHO
+        // ============================================================
+        function adicionarAoCarrinho(id) {
+            const produto = produtos.find(p => p.id === id);
+            if (!produto) return;
+
+            // Verifica se já existe no carrinho
+            const itemExistente = carrinho.find(item => item.id === id);
+
+            if (itemExistente) {
+                itemExistente.quantidade++;
+            } else {
+                // Cria um NOVO objeto (não modifica o original)
+                carrinho.push({ ...produto, quantidade: 1 });
+            }
+
+            salvarCarrinho();
+            atualizarCarrinho();
+        }
+
+        // ============================================================
+        // 7. ATUALIZAR CARRINHO NA TELA
+        // ============================================================
+        function atualizarCarrinho() {
+            // Atualiza a quantidade total
+            const qtdTotal = carrinho.reduce((total, item) => total + item.quantidade, 0);
+            document.getElementById("qtd-carrinho").textContent = qtdTotal;
+
+            // Atualiza o total em R$
+            const total = carrinho.reduce(
+                (acc, item) => acc + item.preco * item.quantidade, 0
+            );
+            document.getElementById("total-carrinho").textContent =
+                total.toFixed(2).replace(".", ",");
+
+            // Renderiza a lista detalhada do carrinho
+            const listaCarrinho = document.getElementById("lista-carrinho");
+            listaCarrinho.innerHTML = "";
+
+            if (carrinho.length === 0) {
+                const msg = document.createElement("p");
+                msg.textContent = "Carrinho vazio. Adicione itens!";
+                listaCarrinho.appendChild(msg);
+                return;
+            }
+
+            carrinho.forEach(item => {
+                const div = document.createElement("div");
+
+                const texto = document.createElement("span");
+                texto.textContent = `${item.nome} (x${item.quantidade}) — R$ ${(item.preco * item.quantidade).toFixed(2).replace(".", ",")} `;
+
+                const btnRemover = document.createElement("button");
+                btnRemover.textContent = "❌";
+                btnRemover.addEventListener("click", () => {
+                    removerDoCarrinho(item.id);
+                });
+
+                div.appendChild(texto);
+                div.appendChild(btnRemover);
+                listaCarrinho.appendChild(div);
+            });
+        }
+
+        // ============================================================
+        // 8. REMOVER DO CARRINHO
+        // ============================================================
+        function removerDoCarrinho(id) {
+            const index = carrinho.findIndex(item => item.id === id);
+            if (index !== -1) {
+                if (carrinho[index].quantidade > 1) {
+                    carrinho[index].quantidade--;
+                } else {
+                    carrinho.splice(index, 1);
+                }
+            }
+            salvarCarrinho();
+            atualizarCarrinho();
+        }
+
+        // ============================================================
+        // 9. PERSISTÊNCIA COM localStorage
+        // ============================================================
+        function salvarCarrinho() {
+            localStorage.setItem("vh-carrinho", JSON.stringify(carrinho));
+        }
+
+        // ============================================================
+        // 10. LIMPAR CARRINHO
+        // ============================================================
+        document.getElementById("btn-limpar").addEventListener("click", function () {
+            if (confirm("Tem certeza que deseja limpar o carrinho?")) {
+                carrinho = [];
+                salvarCarrinho();
+                atualizarCarrinho();
+            }
+        });
+
+        // ============================================================
+        // 11. INICIALIZAR
+        // ============================================================
+        renderizarProdutos();
+        atualizarCarrinho();
+
+        console.log("🍔 v1+js3 carregado!");
+        console.log("Carrinho recuperado:", carrinho.length, "itens");
+    </script>
+
+</body>
+
+</html>

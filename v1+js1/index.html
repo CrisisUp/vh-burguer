@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VH Burger - A Melhor Hamburgueria Artesanal</title>
+</head>
+
+<body>
+    <!-- ===== CABEÇALHO E NAVEGAÇÃO ===== -->
+    <h1>VH Burger</h1>
+    <nav>
+        <a href="index.html">Home</a> |
+        <a href="#cardapio">Cardápio</a> |
+        <a href="#pedido">Como Pedir</a> |
+        <a href="#contato">Contato</a>
+    </nav>
+    <hr>
+    <!-- ===== SAUDAÇÃO DINÂMICA ===== -->
+    <!-- Elemento que será preenchido pelo JS -->
+    <p id="saudacao"></p>
+
+    <!-- ===== RELÓGIO AO VIVO ===== -->
+    <p>
+        🕐 <strong>Horário atual:</strong>
+        <span id="relogio">--:--:--</span>
+    </p>
+
+    <!-- ===== STATUS DE FUNCIONAMENTO ===== -->
+    <p id="status-loja"></p>
+
+    <hr>
+    <!-- ===== SEÇÃO DE APRESENTAÇÃO ===== -->
+    <h2>Bem-vindo à VH Burger</h2>
+
+    <p>
+        Na <strong>VH Burger</strong>, nós acreditamos que um hambúrguer perfeito começa com ingredientes frescos e
+        muito amor.
+        Nossa carne é <em>selecionada diariamente</em> e nossos pães são assados na hora.
+        Venha nos visitar e experimente o verdadeiro sabor de um hambúrguer artesanal!
+    </p>
+
+    <p>
+        <strong>Horário de funcionamento:</strong><br>
+        Terça a Domingo, das 18h às 23h.
+    </p>
+
+    <!-- ===== BOTÕES INTERATIVOS ===== -->
+    <p>
+        <button id="btn-pedido">🍔 Fazer Pedido</button>
+        <button id="btn-saudacao">👋 Me Cumprimente</button>
+    </p>
+
+    <p>
+        Você clicou em "Fazer Pedido" <strong><span id="contador">0</span></strong> vez(es).
+    </p>
+
+    <hr>
+
+    <!-- ===== SEÇÃO DO CARDÁPIO ===== -->
+    <h2 id="cardapio">Nosso Cardápio</h2>
+    <p>
+        Confira abaixo alguns dos nossos itens mais pedidos. Temos opções para <b>todos os gostos</b>,
+        inclusive para os vegetarianos. <i>(Novidades toda semana!)</i>
+    </p>
+
+    <h3>Hambúrgueres</h3>
+    <ul>
+        <li><strong>VH Clássico:</strong> Pão brioche, blend 180g, queijo cheddar, alface e tomate.</li>
+        <li><strong>VH Bacon:</strong> Blend 180g, cheddar, bacon crocante e molho barbecue.</li>
+        <li><strong>VH Veggie:</strong> Hambúrguer de grão-de-bico, queijo minas e rúcula.</li>
+    </ul>
+
+    <h3>Acompanhamentos</h3>
+    <ul>
+        <li>Batata Frita Rústica</li>
+        <li>Onion Rings</li>
+        <li>Nuggets de Frango</li>
+    </ul>
+    <hr>
+    <!-- ===== SEÇÃO DE COMO PEDIR ===== -->
+    <h2 id="pedido">Como Fazer seu Pedido</h2>
+
+    <p>Fazer seu pedido na VH Burger é muito simples e rápido. Siga os passos abaixo:</p>
+    <ol>
+        <li>Escolha o seu hambúrguer favorito no cardápio.</li>
+        <li>Selecione os acompanhamentos e bebidas.</li>
+        <li>Informe seu nome e endereço para entrega (ou retire no balcão).</li>
+        <li>Finalize o pedido e aguarde a confirmação.</li>
+        <li>Pronto! Seu pedido será preparado e enviado.</li>
+    </ol>
+    <hr>
+    <!-- ===== RODAPÉ E CONTATO ===== -->
+    <h2 id="contato">Fale Conosco</h2>
+    <p>
+        <strong>Endereço:</strong> Rua dos Hambúrgueres, 123 - Centro<br>
+        <strong>Telefone:</strong> (11) 99999-9999<br>
+        <strong>E-mail:</strong> contato@vhburger.com.br
+    </p>
+    <p>
+        <a href="index.html">Voltar para a página inicial</a>
+    </p>
+    <hr>
+    <footer>
+        <p><small>&copy; 2026 VH Burger. Todos os direitos reservados.</small></p>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // ============================================================
+        // 1. SAUDAÇÃO DINÂMICA
+        // ============================================================
+        // Pega a hora atual do sistema
+        const agora = new Date();
+        const hora = agora.getHours();
+
+        // Variável que vai guardar a saudação
+        let saudacao;
+
+        // Estrutura condicional: escolhe a saudação conforme a hora
+        if (hora >= 5 && hora < 12) {
+            saudacao = "☀️ Bom dia!";
+        } else if (hora >= 12 && hora < 18) {
+            saudacao = "🌤️ Boa tarde!";
+        } else {
+            saudacao = "🌙 Boa noite!";
+        }
+
+        // Insere o texto no elemento com id="saudacao"
+        document.getElementById("saudacao").textContent =
+            `${saudacao} Bem-vindo à VH Burger!`;
+
+        // ============================================================
+        // 2. RELÓGIO AO VIVO
+        // ============================================================
+        // Função que atualiza o relógio
+        function atualizarRelogio() {
+            const agora = new Date();
+            const horas = String(agora.getHours()).padStart(2, "0");
+            const minutos = String(agora.getMinutes()).padStart(2, "0");
+            const segundos = String(agora.getSeconds()).padStart(2, "0");
+
+            document.getElementById("relogio").textContent =
+                `${horas}:${minutos}:${segundos}`;
+        }
+
+        // Chama a função imediatamente
+        atualizarRelogio();
+
+        // E depois a cada 1 segundo (1000 ms)
+        setInterval(atualizarRelogio, 1000);
+
+        // ============================================================
+        // 3. STATUS DE FUNCIONAMENTO
+        // ============================================================
+        function verificarFuncionamento() {
+            const agora = new Date();
+            const hora = agora.getHours();
+            const dia = agora.getDay(); // 0 = domingo, 1 = segunda, ...
+
+            const status = document.getElementById("status-loja");
+
+            // Segunda-feira (1) = fechado
+            if (dia === 1) {
+                status.textContent = "🔴 Fechado hoje (segunda-feira)";
+                return;
+            }
+
+            // Aberto das 18h às 23h
+            if (hora >= 18 && hora < 23) {
+                status.textContent = "🟢 Estamos abertos agora!";
+            } else {
+                status.textContent = "🟡 Fechado no momento. Abrimos às 18h.";
+            }
+        }
+
+        verificarFuncionamento();
+        setInterval(verificarFuncionamento, 60000); // Verifica a cada 1 minuto
+
+        // ============================================================
+        // 4. BOTÃO "FAZER PEDIDO" + CONTADOR
+        // ============================================================
+        let contador = 0;
+
+        const btnPedido = document.getElementById("btn-pedido");
+        const spanContador = document.getElementById("contador");
+
+        btnPedido.addEventListener("click", function () {
+            contador++;
+            spanContador.textContent = contador;
+
+            alert(`🍔 Seu pedido #${contador} foi anotado!\n\nEm breve um atendente entrará em contato.`);
+        });
+
+        // ============================================================
+        // 5. BOTÃO "ME CUMPRIMENTE" COM prompt()
+        // ============================================================
+        const btnSaudacao = document.getElementById("btn-saudacao");
+
+        btnSaudacao.addEventListener("click", function () {
+            const nome = prompt("Qual é o seu nome?");
+
+            if (nome && nome.trim() !== "") {
+                alert(`👋 Olá, ${nome}! Que bom ter você por aqui!`);
+            } else {
+                alert("Tudo bem! Não precisa dizer seu nome. 😊");
+            }
+        });
+
+        // ============================================================
+        // 6. LOG NO CONSOLE (para depuração)
+        // ============================================================
+        console.log("🍔 Site da VH Burger carregado com sucesso!");
+        console.log("Versão: v1 + JavaScript");
+        console.log("Hora atual:", new Date().toLocaleString("pt-BR"));
+    </script>
+</body>
+
+</html>

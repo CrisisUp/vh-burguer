@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VH Burger - Cardápio Dinâmico (js2)</title>
+</head>
+
+<body>
+
+    <!-- ===== CABEÇALHO ===== -->
+    <h1>VH Burger</h1>
+    <nav>
+        <a href="index.html">Home</a> |
+        <a href="#cardapio">Cardápio</a> |
+        <a href="#contato">Contato</a>
+    </nav>
+
+    <hr>
+
+    <!-- ===== SAUDAÇÃO (do módulo 1) ===== -->
+    <p id="saudacao"></p>
+
+    <!-- ===== SEÇÃO DO CARDÁPIO DINÂMICO ===== -->
+    <h2 id="cardapio">Nosso Cardápio</h2>
+
+    <!-- Barra de busca -->
+    <p>
+        <label for="busca">🔍 Buscar produto:</label>
+        <input type="text" id="busca" placeholder="Ex: bacon, veggie...">
+    </p>
+
+    <!-- Botões de filtro por categoria -->
+    <p>
+        <button class="btn-filtro" data-categoria="todos">Todos</button>
+        <button class="btn-filtro" data-categoria="hamburguer">🍔 Hambúrgueres</button>
+        <button class="btn-filtro" data-categoria="acompanhamento">🍟 Acompanhamentos</button>
+        <button class="btn-filtro" data-categoria="bebida">🥤 Bebidas</button>
+    </p>
+
+    <!-- Container onde o JS vai inserir os produtos -->
+    <div id="lista-produtos"></div>
+
+    <hr>
+
+    <!-- ===== CARRINHO SIMULADO ===== -->
+    <h2>🛒 Seu Carrinho</h2>
+    <p>
+        Itens no carrinho: <strong><span id="qtd-carrinho">0</span></strong>
+    </p>
+    <p>
+        Total: <strong>R$ <span id="total-carrinho">0,00</span></strong>
+    </p>
+    <button id="btn-limpar">🗑️ Limpar Carrinho</button>
+
+    <hr>
+
+    <footer>
+        <p><small>&copy; 2026 VH Burger. Todos os direitos reservados.</small></p>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // ============================================================
+        // 1. SAUDAÇÃO (reaproveitada do módulo 1)
+        // ============================================================
+        const hora = new Date().getHours();
+        let saudacao = "";
+
+        if (hora >= 5 && hora < 12) {
+            saudacao = "☀️ Bom dia!";
+        } else if (hora >= 12 && hora < 18) {
+            saudacao = "🌤️ Boa tarde!";
+        } else {
+            saudacao = "🌙 Boa noite!";
+        }
+
+        document.getElementById("saudacao").textContent =
+            `${saudacao} Bem-vindo à VH Burger!`;
+
+        // ============================================================
+        // 2. ARRAY DE OBJETOS — CARDÁPIO COMPLETO
+        // ============================================================
+        const produtos = [
+            { id: 1, nome: "VH Clássico", descricao: "Pão brioche, blend 180g, cheddar, alface e tomate", preco: 28.00, categoria: "hamburguer" },
+            { id: 2, nome: "VH Bacon", descricao: "Blend 180g, cheddar, bacon crocante e barbecue", preco: 32.00, categoria: "hamburguer" },
+            { id: 3, nome: "VH Veggie", descricao: "Hambúrguer de grão-de-bico, queijo minas e rúcula", preco: 30.00, categoria: "hamburguer" },
+            { id: 4, nome: "Batata Rústica", descricao: "Batatas com casca e temperos especiais", preco: 18.00, categoria: "acompanhamento" },
+            { id: 5, nome: "Onion Rings", descricao: "Anéis de cebola empanados (8 un.)", preco: 16.00, categoria: "acompanhamento" },
+            { id: 6, nome: "Refrigerante Lata", descricao: "Coca-Cola, Guaraná ou Fanta (350ml)", preco: 7.00, categoria: "bebida" },
+            { id: 7, nome: "Milkshake", descricao: "Chocolate, morango ou ovomaltine (400ml)", preco: 18.00, categoria: "bebida" }
+        ];
+
+        // ============================================================
+        // 3. VARIÁVEIS DE ESTADO
+        // ============================================================
+        let categoriaAtual = "todos"; // filtro ativo
+        let termoBusca = "";          // texto da busca
+        let carrinho = [];            // itens adicionados
+
+        // ============================================================
+        // 4. RENDERIZAR PRODUTOS NA TELA
+        // ============================================================
+        const container = document.getElementById("lista-produtos");
+
+        function renderizarProdutos() {
+            // Filtra por categoria
+            let listaFiltrada = produtos;
+
+            if (categoriaAtual !== "todos") {
+                listaFiltrada = listaFiltrada.filter(function (produto) {
+                    return produto.categoria === categoriaAtual;
+                });
+            }
+
+            // Filtra por busca (nome)
+            if (termoBusca !== "") {
+                listaFiltrada = listaFiltrada.filter(function (produto) {
+                    return produto.nome.toLowerCase().includes(termoBusca.toLowerCase());
+                });
+            }
+
+            // Se não houver produtos, mostra mensagem
+            if (listaFiltrada.length === 0) {
+                container.innerHTML = "<p><em>Nenhum produto encontrado. 😕</em></p>";
+                return;
+            }
+
+            // Monta o HTML da lista
+            let html = "";
+            listaFiltrada.forEach(function (produto) {
+                html += `
+                    <div class="produto">
+                        <h3>${produto.nome}</h3>
+                        <p>${produto.descricao}</p>
+                        <p><strong>R$ ${produto.preco.toFixed(2).replace(".", ",")}</strong></p>
+                        <button onclick="adicionarAoCarrinho(${produto.id})">
+                            ➕ Adicionar ao Carrinho
+                        </button>
+                    </div>
+                    <hr>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // ============================================================
+        // 5. FILTROS POR CATEGORIA
+        // ============================================================
+        const botoesFiltro = document.querySelectorAll(".btn-filtro");
+
+        botoesFiltro.forEach(function (botao) {
+            botao.addEventListener("click", function () {
+                categoriaAtual = botao.dataset.categoria;
+                renderizarProdutos();
+            });
+        });
+
+        // ============================================================
+        // 6. BUSCA EM TEMPO REAL
+        // ============================================================
+        const inputBusca = document.getElementById("busca");
+
+        inputBusca.addEventListener("input", function () {
+            termoBusca = inputBusca.value;
+            renderizarProdutos();
+        });
+
+        // ============================================================
+        // 7. ADICIONAR AO CARRINHO
+        // ============================================================
+        function adicionarAoCarrinho(id) {
+            // Procura o produto pelo ID
+            const produto = produtos.find(function (p) {
+                return p.id === id;
+            });
+
+            if (!produto) return;
+
+            // Adiciona ao array do carrinho
+            carrinho.push(produto);
+
+            // Atualiza a tela
+            atualizarCarrinho();
+        }
+
+        // ============================================================
+        // 8. ATUALIZAR CARRINHO NA TELA
+        // ============================================================
+        function atualizarCarrinho() {
+            const qtd = carrinho.length;
+
+            // Soma os preços
+            let total = 0;
+            carrinho.forEach(function (item) {
+                total += item.preco;
+            });
+
+            document.getElementById("qtd-carrinho").textContent = qtd;
+            document.getElementById("total-carrinho").textContent =
+                total.toFixed(2).replace(".", ",");
+        }
+
+        // ============================================================
+        // 9. LIMPAR CARRINHO
+        // ============================================================
+        document.getElementById("btn-limpar").addEventListener("click", function () {
+            carrinho = [];
+            atualizarCarrinho();
+        });
+
+        // ============================================================
+        // 10. INICIALIZAR
+        // ============================================================
+        renderizarProdutos();
+        console.log("🍔 v1+js2 carregado!");
+        console.log("Produtos disponíveis:", produtos.length);
+    </script>
+
+</body>
+
+</html>

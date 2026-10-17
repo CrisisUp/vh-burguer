@@ -1,0 +1,40 @@
+[
+    {
+        "id": 1,
+        "tipo": "hamburguer",
+        "nome": "VH Clássico",
+        "preco": 28.00,
+        "categoria": "hamburguer",
+        "esgotado": false,
+        "pontoCarne": "ao ponto"
+    },
+    {
+        "id": 2,
+        "tipo": "hamburguer",
+        "nome": "VH Bacon",
+        "preco": 32.00,
+        "categoria": "hamburguer",
+        "esgotado": false,
+        "pontoCarne": "bem passado"
+    },
+    {
+        "id": 3,
+        "tipo": "bebida",
+        "nome": "Coca-Cola",
+        "preco": 7.00,
+        "categoria": "bebida",
+        "esgotado": false,
+        "volume": "350ml",
+        "gelada": true
+    },
+    {
+        "id": 4,
+        "tipo": "bebida",
+        "nome": "Suco de Laranja",
+        "preco": 10.00,
+        "categoria": "bebida",
+        "esgotado": false,
+        "volume": "500ml",
+        "gelada": false
+    }
+]

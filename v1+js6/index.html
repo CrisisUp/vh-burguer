@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VH Burger - API (js6)</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 10px;
+        }
+
+        /* Cardápio */
+        .produto {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .produto.esgotado {
+            opacity: 0.5;
+        }
+
+        .produto .preco {
+            color: green;
+            font-weight: bold;
+        }
+
+        .btn-carrinho {
+            background: #ffcc00;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .btn-carrinho:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Carrinho */
+        #lista-carrinho div {
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Formulário */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .erro {
+            color: red;
+            font-size: 0.85em;
+            display: none;
+            margin-top: 5px;
+        }
+
+        .erro.ativo {
+            display: block;
+        }
+
+        .campo-invalido {
+            border: 2px solid red;
+        }
+
+        .campo-valido {
+            border: 2px solid green;
+        }
+
+        /* Feedback */
+        .sucesso {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+            margin-bottom: 20px;
+        }
+
+        .sucesso.ativo {
+            display: block;
+        }
+
+        .erro-rede {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .erro-rede.ativo {
+            display: block;
+        }
+
+        /* Loading (Skeleton) */
+        #loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        #secao-checkout {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>VH Burger - Sistema com API</h1>
+
+    <!-- ===== CARDÁPIO ===== -->
+    <h2>Nosso Cardápio</h2>
+
+    <p>
+        <input type="text" id="busca" placeholder="🔍 Buscar produto...">
+    </p>
+    <p>
+        <button class="btn-filtro" data-categoria="todos">Todos</button>
+        <button class="btn-filtro" data-categoria="hamburguer">🍔 Hambúrgueres</button>
+        <button class="btn-filtro" data-categoria="acompanhamento">🍟 Acompanhamentos</button>
+        <button class="btn-filtro" data-categoria="bebida">🥤 Bebidas</button>
+    </p>
+
+    <!-- Loading e Erro -->
+    <div id="loading">⏳ Carregando cardápio...</div>
+    <div id="erro-rede" class="erro-rede">❌ Erro ao carregar os produtos. Tente novamente mais tarde.</div>
+
+    <div id="lista-produtos"></div>
+
+    <hr>
+
+    <!-- ===== CARRINHO ===== -->
+    <h2>🛒 Seu Carrinho</h2>
+    <p>Itens: <strong><span id="qtd-carrinho">0</span></strong></p>
+    <p>Total: <strong>R$ <span id="total-carrinho">0,00</span></strong></p>
+
+    <div id="lista-carrinho"></div>
+
+    <p>
+        <button id="btn-limpar">🗑️ Limpar Carrinho</button>
+        <button id="btn-ir-checkout"
+            style="background: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+            ➡️ Ir para o Checkout
+        </button>
+    </p>
+
+    <hr>
+
+    <!-- ===== CHECKOUT ===== -->
+    <section id="secao-checkout">
+        <h2>💳 Finalizar Pedido</h2>
+
+        <div id="mensagem-sucesso" class="sucesso">
+            🎉 Pedido realizado com sucesso!
+        </div>
+
+        <form id="form-pedido" novalidate>
+            <div class="form-group">
+                <label for="nome">Nome completo: *</label>
+                <input type="text" id="nome">
+                <span class="erro" id="erro-nome">O nome deve ter pelo menos 3 letras.</span>
+            </div>
+
+            <div class="form-group">
+                <label for="telefone">Telefone: *</label>
+                <input type="text" id="telefone" maxlength="15">
+                <span class="erro" id="erro-telefone">Formato inválido.</span>
+            </div>
+
+            <div class="form-group">
+                <label for="endereco">Endereço completo: *</label>
+                <input type="text" id="endereco">
+                <span class="erro" id="erro-endereco">Preencha o endereço completo (mín. 10).</span>
+            </div>
+
+            <button type="submit"
+                style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px;">
+                ✅ Confirmar Pedido
+            </button>
+        </form>
+    </section>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // ============================================================
+        // PARTE 1: ESTADO GLOBAL
+        // ============================================================
+        let produtos = []; // Vazio! Vai ser preenchido pelo fetch
+        let categoriaAtual = "todos";
+        let termoBusca = "";
+        let carrinho = JSON.parse(localStorage.getItem("vh-carrinho")) || [];
+
+        // Elementos da tela
+        const containerProdutos = document.getElementById("lista-produtos");
+        const loading = document.getElementById("loading");
+        const erroRede = document.getElementById("erro-rede");
+
+        // ============================================================
+        // PARTE 2: BUSCANDO DADOS DA API (O GRANDE DIFERENCIAL)
+        // ============================================================
+        // Função assíncrona para buscar os dados
+        async function carregarProdutos() {
+            // 1. Mostra o loading, esconde erro
+            loading.style.display = "block";
+            erroRede.classList.remove("ativo");
+
+            try {
+                // 2. O fetch faz a requisição HTTP para o arquivo JSON
+                // O await espera a resposta chegar (pode demorar alguns ms)
+                const resposta = await fetch("produtos.json");
+
+                // 3. Verifica se a requisição foi bem-sucedida (status 200)
+                if (!resposta.ok) {
+                    throw new Error(`Erro HTTP: ${resposta.status}`);
+                }
+
+                // 4. Converte a resposta (que é um texto) em um objeto JS
+                produtos = await resposta.json();
+
+                // 5. Esconde o loading e renderiza os produtos
+                loading.style.display = "none";
+                renderizarProdutos();
+
+            } catch (erro) {
+                // Se qualquer coisa der errado no try, cai aqui
+                console.error("Falha ao buscar produtos:", erro);
+                loading.style.display = "none";
+                erroRede.classList.add("ativo");
+            }
+        }
+
+        // ============================================================
+        // PARTE 3: RENDERIZAÇÃO DO CARDÁPIO
+        // ============================================================
+        function renderizarProdutos() {
+            containerProdutos.innerHTML = "";
+            let listaFiltrada = produtos;
+
+            if (categoriaAtual !== "todos") {
+                listaFiltrada = listaFiltrada.filter(p => p.categoria === categoriaAtual);
+            }
+            if (termoBusca !== "") {
+                listaFiltrada = listaFiltrada.filter(p => p.nome.toLowerCase().includes(termoBusca.toLowerCase()));
+            }
+
+            if (listaFiltrada.length === 0) {
+                containerProdutos.innerHTML = "<p>Nenhum produto encontrado.</p>";
+                return;
+            }
+
+            listaFiltrada.forEach(produto => {
+                const div = document.createElement("div");
+                div.className = `produto ${produto.esgotado ? 'esgotado' : ''}`;
+
+                div.innerHTML = `
+                    <h3>${produto.nome}</h3>
+                    <p>${produto.descricao}</p>
+                    <p class="preco">R$ ${produto.preco.toFixed(2).replace(".", ",")}</p>
+                `;
+
+                const btn = document.createElement("button");
+                btn.className = "btn-carrinho";
+                btn.textContent = produto.esgotado ? "❌ Esgotado" : "➕ Adicionar";
+                btn.disabled = produto.esgotado;
+
+                if (!produto.esgotado) {
+                    btn.addEventListener("click", () => adicionarAoCarrinho(produto.id));
+                }
+
+                div.appendChild(btn);
+                containerProdutos.appendChild(div);
+            });
+        }
+
+        // ============================================================
+        // PARTE 4: CONTROLE DO CARRINHO (Mesmo do js5)
+        // ============================================================
+        function adicionarAoCarrinho(id) {
+            const produto = produtos.find(p => p.id === id);
+            if (!produto) return;
+
+            const itemExistente = carrinho.find(item => item.id === id);
+            if (itemExistente) {
+                itemExistente.quantidade++;
+            } else {
+                carrinho.push({ ...produto, quantidade: 1 });
+            }
+            atualizarCarrinho();
+        }
+
+        function removerDoCarrinho(id) {
+            const index = carrinho.findIndex(item => item.id === id);
+            if (index !== -1) {
+                carrinho[index].quantidade--;
+                if (carrinho[index].quantidade === 0) carrinho.splice(index, 1);
+            }
+            atualizarCarrinho();
+        }
+
+        function atualizarCarrinho() {
+            const qtdTotal = carrinho.reduce((acc, item) => acc + item.quantidade, 0);
+            const total = carrinho.reduce((acc, item) => acc + (item.preco * item.quantidade), 0);
+
+            document.getElementById("qtd-carrinho").textContent = qtdTotal;
+            document.getElementById("total-carrinho").textContent = total.toFixed(2).replace(".", ",");
+
+            const listaCarrinho = document.getElementById("lista-carrinho");
+            listaCarrinho.innerHTML = "";
+
+            if (carrinho.length === 0) {
+                listaCarrinho.innerHTML = "<p>Carrinho vazio.</p>";
+            } else {
+                carrinho.forEach(item => {
+                    const div = document.createElement("div");
+                    div.innerHTML = `<span>${item.nome} (x${item.quantidade}) - R$ ${(item.preco * item.quantidade).toFixed(2)}</span>`;
+                    const btnRemover = document.createElement("button");
+                    btnRemover.textContent = "❌";
+                    btnRemover.onclick = () => removerDoCarrinho(item.id);
+                    div.appendChild(btnRemover);
+                    listaCarrinho.appendChild(div);
+                });
+            }
+
+            localStorage.setItem("vh-carrinho", JSON.stringify(carrinho));
+        }
+
+        // Eventos do Cardápio
+        document.querySelectorAll(".btn-filtro").forEach(btn => {
+            btn.addEventListener("click", () => {
+                categoriaAtual = btn.dataset.categoria;
+                renderizarProdutos();
+            });
+        });
+        document.getElementById("busca").addEventListener("input", function () {
+            termoBusca = this.value;
+            renderizarProdutos();
+        });
+
+        document.getElementById("btn-limpar").addEventListener("click", () => {
+            if (confirm("Limpar carrinho?")) {
+                carrinho = [];
+                atualizarCarrinho();
+            }
+        });
+
+        // ============================================================
+        // PARTE 5: CHECKOUT (Mesmo do js5)
+        // ============================================================
+        const secaoCheckout = document.getElementById("secao-checkout");
+        const form = document.getElementById("form-pedido");
+        const msgSucesso = document.getElementById("mensagem-sucesso");
+
+        document.getElementById("btn-ir-checkout").addEventListener("click", () => {
+            if (carrinho.length === 0) {
+                alert("Carrinho vazio!");
+                return;
+            }
+            secaoCheckout.style.display = "block";
+            secaoCheckout.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        function validarCampo(idInput, idErro, condicaoValida) {
+            const input = document.getElementById(idInput);
+            const erro = document.getElementById(idErro);
+            if (condicaoValida) {
+                input.classList.add("campo-valido");
+                input.classList.remove("campo-invalido");
+                erro.classList.remove("ativo");
+                return true;
+            } else {
+                input.classList.add("campo-invalido");
+                input.classList.remove("campo-valido");
+                erro.classList.add("ativo");
+                return false;
+            }
+        }
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const nomeOk = validarCampo("nome", "erro-nome", document.getElementById("nome").value.trim().length >= 3);
+            const telOk = validarCampo("telefone", "erro-telefone", document.getElementById("telefone").value.trim().length >= 8);
+            const endOk = validarCampo("endereco", "erro-endereco", document.getElementById("endereco").value.trim().length >= 10);
+
+            if (nomeOk && telOk && endOk) {
+                // Aqui poderíamos usar OUTRO fetch() para enviar o pedido para um servidor real (POST)
+                // Mas por enquanto, só simulamos o sucesso e logamos no console.
+
+                const pedido = {
+                    cliente: { nome: document.getElementById("nome").value },
+                    itens: carrinho
+                };
+                console.log("📦 Simulação de envio de pedido para a API:", pedido);
+
+                msgSucesso.classList.add("ativo");
+                carrinho = [];
+                atualizarCarrinho();
+                form.reset();
+                document.querySelectorAll(".campo-valido").forEach(el => el.classList.remove("campo-valido"));
+
+                setTimeout(() => {
+                    msgSucesso.classList.remove("ativo");
+                    secaoCheckout.style.display = "none";
+                }, 4000);
+            }
+        });
+
+        // ============================================================
+        // PARTE 6: INICIALIZAÇÃO
+        // ============================================================
+        // Aqui chamamos a função que busca da API ao invés de usar o array fixo
+        carregarProdutos();
+        atualizarCarrinho();
+
+        console.log("🍔 v1+js6 (API) carregado!");
+    </script>
+
+</body>
+
+</html>

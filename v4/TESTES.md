@@ -177,7 +177,7 @@ Este documento contém **todos os testes** que devem ser executados na **v4** do
 ### ✅ Validação HTML5
 
 | # | Teste | Resultado Esperado | Status |
-|---|-------|-------------------|:------:|
+| - | ----- | ------------------ | :----: |
 | 5.10 | Clicar em Enviar com **tudo vazio** | Navegador bloqueia e mostra "Preencha este campo" no Nome | ⬜ |
 | 5.11 | Preencher só o Nome e clicar em Enviar | Bloqueia no E-mail | ⬜ |
 | 5.12 | Digitar "abc" no E-mail | Bloqueia com "Inclua um @..." | ⬜ |
@@ -189,14 +189,14 @@ Este documento contém **todos os testes** que devem ser executados na **v4** do
 ### 🔄 Botões
 
 | # | Teste | Resultado Esperado | Status |
-|---|-------|-------------------|:------:|
+| - | ----- | ------------------ | :----: |
 | 5.17 | Clicar em "Limpar Formulário" | Todos os campos resetam | ⬜ |
 | 5.18 | Clicar em "Enviar Mensagem" | Submete o formulário | ⬜ |
 
 ### 📍 Outros Elementos
 
 | # | Verificar | Resultado Esperado | Status |
-|---|-----------|-------------------|:------:|
+| - | --------- | ------------------ | :----: |
 | 5.19 | `<address>` com endereço | Texto em itálico/indentado | ⬜ |
 | 5.20 | Telefone e e-mail clicáveis | Links azuis sublinhados | ⬜ |
 | 5.21 | Horários com `<time>` | Aparecem corretamente | ⬜ |
@@ -205,7 +205,7 @@ Este documento contém **todos os testes** que devem ser executados na **v4** do
 ### 📱 Links Especiais
 
 | # | Teste | Resultado Esperado | Status |
-|---|-------|-------------------|:------:|
+| - | ----- | ------------------ | :----: |
 | 5.23 | Clicar em "📞 (11) 99999-9999" (celular) | Abre o **discador** | ⬜ |
 | 5.24 | Clicar em "📧 contato@..." | Abre o **cliente de e-mail** | ⬜ |
 
@@ -216,7 +216,7 @@ Este documento contém **todos os testes** que devem ser executados na **v4** do
 **Como testar:** Use **Tab** para navegar e o DevTools.
 
 | # | Teste | Resultado Esperado | Status |
-|---|-------|-------------------|:------:|
+| - | ----- | ------------------ | :----: |
 | 6.1 | Pressionar `Tab` na Home | Foco vai passando pelos links em ordem | ⬜ |
 | 6.2 | Pressionar `Tab` no Contato | Foco vai pelos campos na ordem correta | ⬜ |
 | 6.3 | Clicar no texto "Nome" (label) | Cursor vai para o campo | ⬜ |
@@ -230,7 +230,7 @@ Este documento contém **todos os testes** que devem ser executados na **v4** do
 **Como testar:** Acesse [validator.w3.org](https://validator.w3.org/) e cole o código de cada página (ou use "Validate by File Upload").
 
 | # | Página | Resultado Esperado | Status |
-|---|--------|-------------------|:------:|
+| - | ------ | ------------------ | :----: |
 | 7.1 | `index.html` | 0 erros, 0 avisos (ou só warnings) | ⬜ |
 | 7.2 | `cardapio.html` | 0 erros | ⬜ |
 | 7.3 | `sobre.html` | 0 erros | ⬜ |
@@ -266,7 +266,7 @@ Este documento contém **todos os testes** que devem ser executados na **v4** do
 Vá preenchendo conforme testa:
 
 | Área | Testes | ✅ Passou | ❌ Falhou | 🔧 Pendente |
-|------|:------:|:--------:|:--------:|:-----------:|
+| ---- | :----: | :-------: | :-------: | :---------: |
 | Navegação | 6 | | | |
 | Home | 11 | | | |
 | Cardápio | 14 | | | |
@@ -335,7 +335,7 @@ Bloquear e mostrar mensagem de erro.
 Quando **tudo passar**, podemos:
 
 | Opção | Descrição |
-|-------|-----------|
+| ----- | --------- |
 | 🎨 | **Partir para o CSS** (v5) |
 | 🖼️ | **Criar/organizar as imagens** dos produtos |
 | 📝 | **Finalizar o README** da v4 |
@@ -358,7 +358,7 @@ Se esses 3 passarem, o resto provavelmente também vai. 🎯
 ## 📅 Histórico de Testes
 
 | Data | Testador | Total | ✅ | ❌ | Observações |
-|------|----------|:-----:|:--:|:--:|-------------|
+| ---- | -------- | :---: | :-: | :-: | --------- |
 | | | | | | |
 | | | | | | |
 
