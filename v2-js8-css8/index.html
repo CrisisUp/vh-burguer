@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VH Burger - A melhor hamburgueria artesanal da cidade.">
+    <title>VH Burger - Home</title>
+
+    <!-- Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- ===== CABEÇALHO ===== -->
+    <header>
+        <h1>VH Burger</h1>
+        <p id="saudacao-topo"></p>
+        <nav aria-label="Menu principal">
+            <a href="index.html">Home</a>
+            <a href="cardapio.html">Cardápio</a>
+            <a href="sobre.html">Sobre</a>
+            <a href="contato.html">Contato</a>
+        </nav>
+    </header>
+
+    <!-- ===== CONTEÚDO ===== -->
+    <main>
+
+        <h2>Bem-vindo à VH Burger</h2>
+
+        <p>
+            Na <strong>VH Burger</strong>, nós acreditamos que um hambúrguer perfeito
+            começa com ingredientes frescos e muito amor.
+            Nossa carne é <em>selecionada diariamente</em> e nossos pães são assados na hora.
+        </p>
+
+        <div class="destaque-box">
+            <strong>Horário de funcionamento:</strong><br>
+            Terça a Domingo, das 18h às 23h.
+        </div>
+
+        <h2>Destaques do Cardápio</h2>
+
+        <p>
+            Confira abaixo alguns dos nossos itens mais pedidos. Temos opções para
+            <b>todos os gostos</b>, inclusive para os vegetarianos.
+            <i>(Novidades toda semana!)</i>
+        </p>
+
+        <h3>🍔 Hambúrgueres</h3>
+        <ul>
+            <li><strong>VH Clássico:</strong> Pão brioche, blend 180g, queijo cheddar, alface e tomate.</li>
+            <li><strong>VH Bacon:</strong> Blend 180g, cheddar, bacon crocante e molho barbecue.</li>
+            <li><strong>VH Veggie:</strong> Hambúrguer de grão-de-bico, queijo minas e rúcula.</li>
+        </ul>
+
+        <p>
+            <a href="cardapio.html">👉 Ver cardápio completo</a>
+        </p>
+
+        <h2>Como Fazer seu Pedido</h2>
+        <ol>
+            <li>Escolha o seu hambúrguer favorito no cardápio.</li>
+            <li>Selecione os acompanhamentos e bebidas.</li>
+            <li>Informe seu nome e endereço para entrega.</li>
+            <li>Finalize o pedido e aguarde a confirmação.</li>
+            <li>Pronto! Seu pedido será preparado e enviado.</li>
+        </ol>
+
+    </main>
+
+    <!-- ===== RODAPÉ ===== -->
+    <footer>
+        <p>
+            🕐 Hora atual: <span id="relogio">--:--:--</span>
+        </p>
+        <p><small>&copy; 2026 VH Burger. Todos os direitos reservados.</small></p>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="dist/carrinho.js"></script>
+    <script type="module" src="dist/main.js"></script>
+    <script type="module" src="dist/cardapio.js"></script>
+
+</body>
+
+</html>

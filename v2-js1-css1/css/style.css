@@ -1,0 +1,211 @@
+/* ============================================================
+   VH BURGER - Estilos Globais (js1-css1)
+   ============================================================ */
+
+/* --- 1. Variáveis de Cor --- */
+:root {
+  --cor-fundo: #1a1a1a;
+  --cor-fundo-alt: #242424;
+  --cor-texto: #f5f5f5;
+  --cor-texto-suave: #b3b3b3;
+  --cor-destaque: #ffcc00;
+  --cor-destaque-hover: #ffd633;
+  --cor-secundaria: #e63946;
+  --cor-borda: #333;
+}
+
+/* --- 2. Reset Básico --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* --- 3. Corpo da Página --- */
+body {
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  line-height: 1.6;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* --- 4. Cabeçalho --- */
+header {
+  text-align: center;
+  padding: 30px 0 20px;
+  border-bottom: 3px solid var(--cor-destaque);
+  margin-bottom: 30px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: var(--cor-destaque);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+/* Saudação dinâmica (inserida via JS) */
+#saudacao-topo {
+  font-size: 1rem;
+  color: var(--cor-texto-suave);
+  margin-bottom: 15px;
+  font-style: italic;
+}
+
+/* --- 5. Navegação --- */
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  flex-wrap: wrap;
+  padding: 15px 0;
+}
+
+nav a {
+  color: var(--cor-texto);
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+  font-weight: 500;
+}
+
+nav a:hover {
+  background-color: var(--cor-destaque);
+  color: var(--cor-fundo);
+}
+
+/* Página ativa (via JS) */
+nav a.ativo {
+  background-color: var(--cor-destaque);
+  color: var(--cor-fundo);
+  font-weight: bold;
+}
+
+/* --- 6. Títulos e Subtítulos --- */
+h2 {
+  color: var(--cor-destaque);
+  font-size: 1.8rem;
+  margin: 30px 0 15px;
+  border-left: 4px solid var(--cor-secundaria);
+  padding-left: 15px;
+}
+
+h3 {
+  color: var(--cor-texto);
+  font-size: 1.3rem;
+  margin: 20px 0 10px;
+}
+
+/* --- 7. Parágrafos e Textos --- */
+p {
+  margin-bottom: 15px;
+  color: var(--cor-texto-suave);
+}
+
+strong {
+  color: var(--cor-texto);
+  font-weight: 600;
+}
+
+em {
+  color: var(--cor-destaque);
+}
+
+/* --- 8. Linhas Horizontais --- */
+hr {
+  border: none;
+  border-top: 1px solid var(--cor-borda);
+  margin: 30px 0;
+}
+
+/* --- 9. Listas --- */
+ul,
+ol {
+  margin: 15px 0 20px 30px;
+  color: var(--cor-texto-suave);
+}
+
+li {
+  margin-bottom: 8px;
+}
+
+/* --- 10. Rodapé --- */
+footer {
+  text-align: center;
+  padding: 30px 0 20px;
+  margin-top: 40px;
+  border-top: 1px solid var(--cor-borda);
+  color: var(--cor-texto-suave);
+  font-size: 0.9rem;
+}
+
+/* Relógio no rodapé (inserido via JS) */
+#relogio {
+  color: var(--cor-destaque);
+  font-weight: bold;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- 11. Botão Voltar ao Topo --- */
+#btn-topo {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--cor-destaque);
+  color: var(--cor-fundo);
+  border: none;
+  padding: 12px 18px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  display: none; /* Escondido por padrão */
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+  z-index: 999;
+}
+
+#btn-topo:hover {
+  background-color: var(--cor-destaque-hover);
+  transform: scale(1.1);
+}
+
+#btn-topo.visivel {
+  display: block;
+}
+
+/* --- 12. Caixas de Destaque --- */
+.destaque-box {
+  background-color: var(--cor-fundo-alt);
+  border-left: 4px solid var(--cor-destaque);
+  padding: 15px 20px;
+  margin: 20px 0;
+  border-radius: 4px;
+}
+
+/* --- 13. Links (fora da nav) --- */
+a {
+  color: var(--cor-destaque);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Exceção: links dentro da nav (para não sublinhar) */
+nav a:hover {
+  text-decoration: none;
+}
