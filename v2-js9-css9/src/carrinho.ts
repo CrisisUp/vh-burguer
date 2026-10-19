@@ -25,7 +25,7 @@ export function mostrarToast(mensagem: string): void {
 function criarEstruturaCarrinho(): void {
     if (document.getElementById("painel-carrinho")) return;
 
-    // Botão Flutuante
+    // Botão Flutuante (Mobile)
     const btnFlutuante = document.createElement("button");
     btnFlutuante.id = "btn-carrinho-flutuante";
     btnFlutuante.innerHTML = '🛒 <span class="badge" id="badge-carrinho" style="display:none;">0</span>';
@@ -55,7 +55,6 @@ function criarEstruturaCarrinho(): void {
     `;
     document.body.appendChild(painel);
 
-    // Eventos do painel
     document.getElementById("btn-fechar-carrinho")?.addEventListener("click", fecharCarrinho);
     document.getElementById("btn-limpar-carrinho")?.addEventListener("click", () => {
         if (confirm("Limpar carrinho?")) {
@@ -70,22 +69,30 @@ function criarEstruturaCarrinho(): void {
         }
         window.location.href = "contato.html";
     });
+
+    // NOVO: Escuta o botão do header
+    const btnHeader = document.getElementById("btn-carrinho-header");
+    if (btnHeader) {
+        btnHeader.addEventListener("click", abrirCarrinho);
+    }
 }
 
 // ============================================================
-// 3. ATUALIZA A INTERFACE (Lista e Badge)
+// 3. ATUALIZA A INTERFACE (Lista e Badges)
 // ============================================================
 function atualizarInterfaceCarrinho(): void {
-    const badge = document.getElementById("badge-carrinho");
-    if (badge) {
-        badge.textContent = carrinho.quantidadeTotal.toString();
-        badge.style.display = carrinho.quantidadeTotal > 0 ? "inline-block" : "none";
-        
-        // Efeito de pulso
-        if (carrinho.quantidadeTotal > 0) {
-            badge.classList.add("pulsando");
-            setTimeout(() => badge.classList.remove("pulsando"), 400);
-        }
+    // Atualiza o badge do botão flutuante (Mobile)
+    const badgeFlutuante = document.getElementById("badge-carrinho");
+    if (badgeFlutuante) {
+        badgeFlutuante.textContent = carrinho.quantidadeTotal.toString();
+        badgeFlutuante.style.display = carrinho.quantidadeTotal > 0 ? "inline-block" : "none";
+    }
+
+    // NOVO: Atualiza o badge do header (Desktop)
+    const badgeHeader = document.getElementById("badge-carrinho-header");
+    if (badgeHeader) {
+        badgeHeader.textContent = carrinho.quantidadeTotal.toString();
+        badgeHeader.style.display = carrinho.quantidadeTotal > 0 ? "inline-block" : "none";
     }
 
     const lista = document.getElementById("lista-carrinho");
@@ -112,7 +119,6 @@ function atualizarInterfaceCarrinho(): void {
         });
         lista.innerHTML = html;
 
-        // Eventos de + e -
         lista.querySelectorAll(".btn-decrementar").forEach(btn => {
             btn.addEventListener("click", (e) => {
                 const target = e.target as HTMLButtonElement;
@@ -158,7 +164,6 @@ document.addEventListener("DOMContentLoaded", () => {
     criarEstruturaCarrinho();
     atualizarInterfaceCarrinho();
     
-    // Escuta os eventos disparados pelo cardapio.ts
     window.addEventListener("carrinho-atualizado", atualizarInterfaceCarrinho);
     window.addEventListener("abrir-carrinho", abrirCarrinho);
 });

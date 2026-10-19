@@ -138,5 +138,5 @@ document.addEventListener("DOMContentLoaded", () => {
     configurarBotaoTopo();
     configurarTema();
     configurarMenuMobile();
-    console.log("🍔 VH Burger v2-js8-css8 (TypeScript) carregado!");
+    console.log("🍔 VH Burger v2-js9-css9 (TypeScript) carregado!");
 });

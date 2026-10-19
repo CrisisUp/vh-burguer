@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
@@ -20,26 +21,16 @@
 
     <!-- ===== CABEÇALHO ===== -->
     <header>
-        <!-- LOGO DA MARCA -->
-        <a href="index.html" class="logo" aria-label="Página inicial da VH Burger">
-            <div class="logo-icone">
-                <div class="pao-cima"></div>
-                <div class="carne"></div>
-                <div class="queijo"></div>
-                <div class="pao-baixo"></div>
-            </div>
-            <div class="logo-texto">
-                <span class="vh">VH</span>
-                <span class="burger">Burger</span>
-            </div>
-        </a>
-        <p id="saudacao-topo"></p>
-        <nav aria-label="Menu principal">
-            <a href="index.html">Home</a>
-            <a href="cardapio.html">Cardápio</a>
-            <a href="sobre.html">Sobre</a>
-            <a href="contato.html">Contato</a>
-        </nav>
+        <a href="index.html" class="logo">...</a>
+
+        <div class="header-actions">
+            <button id="btn-tema" aria-label="Alternar tema"></button>
+            <button id="btn-carrinho-header" aria-label="Abrir carrinho">
+                🛒 <span class="badge" id="badge-carrinho-header" style="display:none;">0</span>
+            </button>
+        </div>
+
+        <nav aria-label="Menu principal">...</nav>
     </header>
 
     <!-- ===== HERO SECTION ===== -->

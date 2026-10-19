@@ -1646,39 +1646,82 @@ footer {
 }
 
 @media (max-width: 768px) {
+  /* 1. HEADER: Vira uma barra horizontal fixa */
   header {
-    padding: 20px 10px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    position: sticky;
+    top: 0;
+    background-color: var(--cor-fundo);
+    z-index: 1000;
+    border-bottom: 2px solid var(--cor-destaque);
   }
+
+  /* 2. LOGO: Reduzido para caber na barra */
+  .logo {
+    margin: 0;
+    transform: scale(0.6);
+    transform-origin: left center;
+  }
+
+  /* 3. AÇÕES DO HEADER: Alinha carrinho e menu */
+  .header-actions {
+    display: flex;
+    align-items: center;
+  }
+
+  /* 4. CARRINHO NO HEADER: Ajuste de tamanho */
+  #btn-carrinho-header {
+    display: flex;
+    position: static;
+    margin-right: 15px;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+
+  /* 5. BOTÃO MENU (☰): Vai para a direita */
   #btn-menu-mobile {
     display: block;
-    position: absolute;
-    top: 20px;
-    left: 20px;
+    position: static;
+    margin-left: auto;
     background: none;
-    border: 2px solid var(--cor-destaque);
+    border: none;
     color: var(--cor-destaque);
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-size: 1.5rem;
+    font-size: 2rem;
     cursor: pointer;
     z-index: 1001;
   }
+
+  /* 6. NAVEGAÇÃO: Menu dropdown */
   nav {
     display: none;
-    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
     width: 100%;
+    background-color: var(--cor-fundo-alt);
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    border-bottom: 2px solid var(--cor-destaque);
     gap: 5px;
-    padding: 15px 0;
-    margin-top: 15px;
   }
+
   nav.menu-aberto {
     display: flex;
     animation: slideDown 0.3s ease;
   }
+
   nav a {
     text-align: center;
     background-color: var(--cor-fundo-alt);
+    padding: 12px;
   }
+
+  /* --- O resto do seu CSS original continua igual daqui para baixo --- */
   .grid-produtos {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
