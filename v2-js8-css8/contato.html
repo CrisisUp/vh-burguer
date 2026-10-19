@@ -9,14 +9,26 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body class="fundo-chef">
 
     <header>
-        <h1>VH Burger</h1>
+        <!-- LOGO DA MARCA -->
+        <a href="index.html" class="logo" aria-label="Página inicial da VH Burger">
+            <div class="logo-icone">
+                <div class="pao-cima"></div>
+                <div class="carne"></div>
+                <div class="queijo"></div>
+                <div class="pao-baixo"></div>
+            </div>
+            <div class="logo-texto">
+                <span class="vh">VH</span>
+                <span class="burger">Burger</span>
+            </div>
+        </a>
         <p id="saudacao-topo"></p>
         <nav aria-label="Menu principal">
             <a href="index.html">Home</a>
@@ -27,75 +39,76 @@
     </header>
 
     <main>
+        <div class="checkout-wrapper">
 
-        <h2>Finalizar Pedido</h2>
-
-        <!-- Mensagem de sucesso (oculta) -->
-        <div id="mensagem-sucesso" class="mensagem-sucesso">
-            🎉 Pedido realizado com sucesso! Redirecionando...
-        </div>
-
-        <div class="checkout-container">
-
-            <!-- Resumo do pedido -->
-            <div class="resumo-pedido">
-                <h4>📋 Resumo do Pedido</h4>
-                <div id="resumo-pedido-conteudo">
-                    <!-- Preenchido via JS -->
-                </div>
+            <div class="checkout-header">
+                <h2>Finalizar Pedido</h2>
+                <p>Preencha seus dados para receber o hambúrguer mais delicioso da cidade.</p>
             </div>
 
-            <!-- Formulário -->
-            <form id="form-checkout" novalidate>
-                <fieldset>
-                    <legend>📝 Dados Pessoais</legend>
+            <div id="mensagem-sucesso" class="mensagem-sucesso">
+                🎉 Pedido realizado com sucesso!
+            </div>
 
-                    <div class="form-group">
-                        <label for="nome">Nome completo <span class="obrigatorio">*</span></label>
-                        <input type="text" id="nome" name="nome" placeholder="Ex: João da Silva">
+            <div class="resumo-pedido">
+                <h4>📋 Resumo do Pedido</h4>
+                <div id="resumo-pedido-conteudo"></div>
+            </div>
+
+            <form id="form-checkout" novalidate>
+
+                <!-- GRUPO 1 -->
+                <fieldset>
+                    <legend>👤 Dados Pessoais</legend>
+
+                    <div class="input-group">
+                        <input type="text" id="nome" name="nome" placeholder=" " required>
+                        <label for="nome">👤 Nome completo *</label>
                         <span class="erro" id="erro-nome">O nome deve ter pelo menos 3 letras.</span>
                     </div>
 
-                    <div class="form-group">
-                        <label for="email">E-mail <span class="obrigatorio">*</span></label>
-                        <input type="email" id="email" name="email" placeholder="seu@email.com">
+                    <div class="input-group">
+                        <input type="email" id="email" name="email" placeholder=" " required>
+                        <label for="email">✉️ E-mail *</label>
                         <span class="erro" id="erro-email">Digite um e-mail válido.</span>
                     </div>
 
-                    <div class="form-group">
-                        <label for="telefone">Telefone / WhatsApp <span class="obrigatorio">*</span></label>
-                        <input type="tel" id="telefone" name="telefone" placeholder="(11) 99999-9999" maxlength="15">
-                        <span class="erro" id="erro-telefone">Formato inválido. Use (XX) XXXXX-XXXX.</span>
+                    <div class="input-group">
+                        <input type="tel" id="telefone" name="telefone" placeholder=" " maxlength="15" required>
+                        <label for="telefone">📞 Telefone / WhatsApp *</label>
+                        <span class="erro" id="erro-telefone">Formato inválido.</span>
                     </div>
                 </fieldset>
 
+                <!-- GRUPO 2 -->
                 <fieldset>
                     <legend>📍 Endereço de Entrega</legend>
 
-                    <div class="form-group">
-                        <label for="cep">CEP <span class="obrigatorio">*</span></label>
-                        <input type="text" id="cep" name="cep" placeholder="12345-678" maxlength="9">
-                        <span class="erro" id="erro-cep">Formato inválido. Use 12345-678.</span>
+                    <div class="input-group">
+                        <input type="text" id="cep" name="cep" placeholder=" " maxlength="9" required>
+                        <label for="cep">📍 CEP *</label>
+                        <span class="erro" id="erro-cep">Formato inválido.</span>
                     </div>
 
-                    <div class="form-group">
-                        <label for="endereco">Endereço completo <span class="obrigatorio">*</span></label>
-                        <input type="text" id="endereco" name="endereco" placeholder="Rua, número, bairro...">
-                        <span class="erro" id="erro-endereco">Preencha o endereço completo (mín. 10 caracteres).</span>
+                    <div class="input-group">
+                        <input type="text" id="endereco" name="endereco" placeholder=" " required>
+                        <label for="endereco">🏠 Endereço completo *</label>
+                        <span class="erro" id="erro-endereco">Preencha o endereço completo (mín. 10).</span>
                     </div>
                 </fieldset>
 
+                <!-- GRUPO 3 -->
                 <fieldset>
                     <legend>💳 Pagamento</legend>
 
-                    <div class="form-group">
-                        <label for="pagamento">Forma de pagamento <span class="obrigatorio">*</span></label>
-                        <select id="pagamento" name="pagamento">
-                            <option value="">-- Selecione --</option>
+                    <div class="input-group">
+                        <select id="pagamento" name="pagamento" required>
+                            <option value="" disabled selected hidden></option>
                             <option value="pix">PIX</option>
                             <option value="cartao">Cartão de Crédito/Débito</option>
                             <option value="dinheiro">Dinheiro (na entrega)</option>
                         </select>
+                        <label for="pagamento">💳 Forma de pagamento *</label>
                         <span class="erro" id="erro-pagamento">Escolha uma forma de pagamento.</span>
                     </div>
                 </fieldset>
@@ -106,8 +119,16 @@
                 </div>
             </form>
 
-        </div>
+            <!-- MAPA FICTÍCIO / ESTILIZADO -->
+            <div class="mapa-container">
+                <h4>📍 Onde estamos</h4>
+                <div class="mapa-placeholder">
+                    <span class="pin">📍</span>
+                    <p>Rua dos Hambúrgueres, 123 - Centro<br>São Paulo / SP</p>
+                </div>
+            </div>
 
+        </div>
     </main>
 
     <footer>
@@ -115,11 +136,9 @@
         <p><small>&copy; 2026 VH Burger. Todos os direitos reservados.</small></p>
     </footer>
 
-    <!-- Scripts -->
-    <script type="module" src="dist/carrinho.js"></script>
     <script type="module" src="dist/main.js"></script>
-    <script type="module" src="dist/cardapio.js"></script>
-
+    <script type="module" src="dist/carrinho.js"></script>
+    <script type="module" src="dist/checkout.js"></script>
 </body>
 
 </html>

@@ -4,19 +4,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Conheça a história da VH Burger.">
-    <title>VH Burger - Sobre</title>
+    <meta name="description" content="Conheça a história, os valores e a equipe da VH Burger.">
+    <title>VH Burger - Sobre Nós</title>
 
+    <!-- Fontes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body class="fundo-chef">
 
+    <!-- ===== CABEÇALHO ===== -->
     <header>
-        <h1>VH Burger</h1>
+        <!-- LOGO DA MARCA -->
+        <a href="index.html" class="logo" aria-label="Página inicial da VH Burger">
+            <div class="logo-icone">
+                <div class="pao-cima"></div>
+                <div class="carne"></div>
+                <div class="queijo"></div>
+                <div class="pao-baixo"></div>
+            </div>
+            <div class="logo-texto">
+                <span class="vh">VH</span>
+                <span class="burger">Burger</span>
+            </div>
+        </a>
         <p id="saudacao-topo"></p>
         <nav aria-label="Menu principal">
             <a href="index.html">Home</a>
@@ -27,65 +43,158 @@
     </header>
 
     <main>
+        <!-- ===== HERO SECTION ===== -->
+        <section class="sobre-hero">
+            <div class="sobre-hero-content">
+                <h2>Mais que um hambúrguer.<br>Uma experiência.</h2>
+                <p>Desde 2020, dedicados a criar o melhor hambúrguer artesanal da cidade.</p>
+            </div>
+        </section>
 
-        <h2>Sobre a VH Burger</h2>
+        <!-- ===== NOSSA HISTÓRIA (TIMELINE) ===== -->
+        <section class="historia-section">
+            <h2>📖 Nossa História</h2>
+            <div class="timeline">
 
-        <p>
-            A <strong>VH Burger</strong> nasceu em 2020 com um sonho simples:
-            fazer o melhor hambúrguer artesanal da cidade. Desde então,
-            temos nos dedicado a <em>selecionar ingredientes frescos</em>
-            e preparar cada lanche com muito carinho.
-        </p>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>2020 — O Começo</h3>
+                        <p>Dois amigos, uma chapa e um sonho: fazer o melhor hambúrguer da cidade. O primeiro VH
+                            Clássico foi servido em um domingo à noite.</p>
+                    </div>
+                </div>
 
-        <h3>📖 Nossa História</h3>
-        <p>
-            Tudo começou com uma pequena chapa, dois amigos apaixonados por gastronomia
-            e a vontade de criar algo diferente. O primeiro <strong>VH Clássico</strong>
-            foi servido em um domingo à noite — e desde então, nunca mais paramos.
-        </p>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>2021 — O Primeiro Espaço</h3>
+                        <p>Inauguramos nossa primeira loja física no centro. Em poucos meses, o VH Bacon se tornou o
+                            campeão de vendas.</p>
+                    </div>
+                </div>
 
-        <h3>🎯 Nossa Missão</h3>
-        <p>
-            Proporcionar uma experiência gastronômica única, unindo
-            <b>sabor</b>, <b>qualidade</b> e <b>atendimento</b> em cada pedido.
-        </p>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>2023 — Expansão</h3>
+                        <p>Chegamos a mais bairros com delivery próprio. Fomos eleitos a "Melhor Hamburgueria Artesanal"
+                            pela revista local.</p>
+                    </div>
+                </div>
 
-        <h3>💎 Nossos Valores</h3>
-        <ol>
-            <li>Ingredientes sempre frescos</li>
-            <li>Atendimento humanizado</li>
-            <li>Respeito ao meio ambiente</li>
-            <li>Preços justos</li>
-            <li>Amor pelo que fazemos</li>
-        </ol>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h3>2026 — Hoje</h3>
+                        <p>Seguimos inovando, com opções vegetarianas, ingredientes frescos e o mesmo amor do primeiro
+                            dia.</p>
+                    </div>
+                </div>
 
-        <h3>⭐ Nossos Diferenciais</h3>
-        <ul>
-            <li><strong>Carne selecionada</strong> — blend exclusivo da casa</li>
-            <li><strong>Pão artesanal</strong> — assado diariamente</li>
-            <li><strong>Molhos caseiros</strong> — receitas secretas</li>
-            <li><strong>Opções vegetarianas</strong> — para todos os gostos</li>
-            <li><strong>Entrega rápida</strong> — em até 40 minutos</li>
-        </ul>
+            </div>
+        </section>
 
-        <h3>👨‍🍳 Nossa Equipe</h3>
-        <p>
-            Contamos com uma equipe apaixonada por hambúrgueres, desde os chefs
-            até o time de atendimento. Todos trabalham juntos para garantir
-            que sua experiência seja <em>inesquecível</em>.
-        </p>
+        <!-- ===== MISSÃO E VALORES ===== -->
+        <section class="valores-section">
+            <h2>💎 Nossos Valores</h2>
+            <div class="valores-grid">
+                <div class="valor-card">
+                    <!-- Ícone de Carne (Steak) -->
+                    <svg class="valor-icone-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path>
+                        <path d="M8 12h8"></path>
+                        <path d="M12 8v8"></path>
+                    </svg>
+                    <h3>Ingredientes Frescos</h3>
+                    <p>Carne selecionada diariamente e pães assados na hora.</p>
+                </div>
 
+                <div class="valor-card">
+                    <!-- Ícone de Coração (Heart) -->
+                    <svg class="valor-icone-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                        </path>
+                    </svg>
+                    <h3>Amor pelo que Fazemos</h3>
+                    <p>Cada lanche é preparado com carinho e dedicação.</p>
+                </div>
+
+                <div class="valor-card">
+                    <!-- Ícone de Folha (Leaf) -->
+                    <svg class="valor-icone-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z">
+                        </path>
+                        <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+                    </svg>
+                    <h3>Respeito ao Meio Ambiente</h3>
+                    <p>Embalagens sustentáveis e parcerias com produtores locais.</p>
+                </div>
+
+                <div class="valor-card">
+                    <!-- Ícone de Aperto de Mão (Handshake) -->
+                    <svg class="valor-icone-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+                        <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+                        <path d="M2 2l7.586 7.586"></path>
+                        <circle cx="11" cy="11" r="2"></circle>
+                    </svg>
+                    <h3>Atendimento Humanizado</h3>
+                    <p>Tratamos cada cliente como parte da família VH.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CITAÇÃO EM DESTAQUE ===== -->
+        <section class="citacao-section">
+            <blockquote>
+                <p>"O segredo não está na receita, mas no <mark>amor</mark> que colocamos em cada detalhe."</p>
+                <footer>
+                    — <cite>Vitor Hugo, fundador da VH Burger</cite>
+                </footer>
+            </blockquote>
+        </section>
+
+        <!-- ===== NOSSA EQUIPE ===== -->
+        <section class="equipe-section">
+            <h2>👨‍🍳 Conheça Nossa Equipe</h2>
+            <div class="equipe-grid">
+                <div class="membro">
+                    <img src="https://images.unsplash.com/photo-1583394293214-28ded15ee548?w=300&h=300&fit=crop"
+                        alt="Chef Vitor Hugo">
+                    <h3>Vitor Hugo</h3>
+                    <p>Fundador & Chef</p>
+                </div>
+                <div class="membro">
+                    <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=300&h=300&fit=crop"
+                        alt="Chef Marina">
+                    <h3>Marina Costa</h3>
+                    <p>Chef de Cozinha</p>
+                </div>
+                <div class="membro">
+                    <img src="https://images.unsplash.com/photo-1607631568010-a87245c0daf8?w=300&h=300&fit=crop"
+                        alt="Atendente Lucas">
+                    <h3>Lucas Silva</h3>
+                    <p>Atendimento</p>
+                </div>
+            </div>
+        </section>
     </main>
 
+    <!-- ===== RODAPÉ ===== -->
     <footer>
         <p>🕐 Hora atual: <span id="relogio">--:--:--</span></p>
         <p><small>&copy; 2026 VH Burger. Todos os direitos reservados.</small></p>
     </footer>
 
     <!-- Scripts -->
-    <script type="module" src="dist/carrinho.js" defer></script>
-    <script type="module" src="dist/main.js" defer></script>
-    <script type="module" src="dist/cardapio.js" defer></script>
+    <script type="module" src="dist/main.js"></script>
+    <script type="module" src="dist/carrinho.js"></script>
 
 </body>
 

@@ -4,30 +4,35 @@
 ![HTML5](https://img.shields.io/badge/HTML-5-orange)
 ![CSS3](https://img.shields.io/badge/CSS-3-blue)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
-![OOP](https://img.shields.io/badge/OOP-Design%20Patterns-red)
+![Design](https://img.shields.io/badge/Design-Premium-gold)
 
 ## 📋 Sobre o Projeto
 
 Oitava evolução do site multipáginas da VH Burger.
 
-Esta pasta representa a **migração completa para TypeScript**. O código que antes era JavaScript puro com OOP agora possui **tipagem estrita**, **interfaces**, e é compilado via `tsc` antes de rodar no navegador. Isso eleva o projeto a um padrão de mercado para aplicações escaláveis.
+Esta versão representa a consolidação do projeto em **nível de mercado**. Além da arquitetura robusta com TypeScript, OOP e Design Patterns, a interface passou por uma **refatoração visual profunda**, transformando o site em um portfólio digno de agência.
 
 ## 🎯 O Que Foi Adicionado Nesta Versão
 
-### TypeScript (Arquitetura)
+### Arquitetura e Lógica (TypeScript)
 
 - **Tipagem estrita** (`strict: true` no `tsconfig.json`).
 - **Interfaces** (`ProdutoDados`, `ItemCarrinho`, `PagamentoStrategy`).
-- **Type Assertions** (`as HTMLButtonElement`, `as ItemCarrinho[]`).
-- **Source Maps** para debug direto no arquivo `.ts` no navegador.
-- **Separação de pastas**: `src/` (código fonte) e `dist/` (compilado).
+- **Design Patterns**: Singleton (Carrinho), Strategy (Pagamento), Observer (Eventos).
+- **Compilação** via `tsc` (pasta `src/` para `.ts`, pasta `dist/` para `.js`).
+- **Módulos ES6** (`import`/`export`).
 
-### Design Patterns Mantidos
+### Identidade Visual e UI/UX (CSS e HTML)
 
-- **Singleton** no `Carrinho`.
-- **Strategy** nos `Pagamentos`.
-- **Observer** (Eventos customizados para atualizar a interface).
-- **Encapsulamento** (`#itens` privado).
+- **Logo 100% em CSS** (sem imagens externas).
+- **Fundo com imagem de chef** e efeito de vidro fosco (Glassmorphism).
+- **Home "Perfumada"**: Hero section com imagem flutuante e depoimentos em cards.
+- **Página "Sobre"**: Linha do tempo (Timeline), citação em destaque e equipe.
+- **Cardápio**: Banner com sombra neon e botões com efeito glow.
+- **Checkout**: Floating labels (rótulos flutuantes), máscaras e mapa estilizado.
+- **Ícones SVG**: Substituição de emojis por ícones minimalistas no "Nossos Valores".
+- **Favicon SVG**: Ícone de hambúrguer na aba do navegador.
+- **Dark/Light Mode**: Alternância de tema com tons de marrom café no modo claro.
 
 ## 📁 Estrutura do Projeto
 
@@ -39,45 +44,44 @@ v2-js8-css8/
 ├── sobre.html
 ├── contato.html
 ├── produtos.json
+├── favicon.svg
 │
 ├── css/
-│   └── style.css
+│   └── style.css           (Design System + Componentes)
 │
-├── src/                    ← Código TypeScript (o que você escreve)
+├── src/                    (Código TypeScript)
 │   ├── main.ts             (Tema, menu mobile, saudação)
 │   ├── cardapio.ts         (Fetch e renderização)
 │   ├── carrinho.ts         (Interface visual e eventos)
 │   ├── checkout.ts         (Validação e Strategy)
-│   │
 │   └── models/
-│       ├── Produto.ts      (Classe Base)
-│       ├── Carrinho.ts     (Classe Singleton)
-│       └── Pagamento.ts    (Classes Strategy)
+│       ├── Produto.ts
+│       ├── Carrinho.ts
+│       └── Pagamento.ts
 │
-├── dist/                   ← Código compilado (gerado pelo `npm run build`)
-│   └── (arquivos .js prontos para o navegador)
+├── dist/                   (Gerado pelo `npm run build`)
 │
-├── package.json            ← Configuração do Node (instala o TypeScript)
-└── tsconfig.json           ← Configuração do compilador TypeScript
+├── package.json
+└── tsconfig.json
 ```
 
 ## 🎨 Paleta de Cores
 
 ```text
-| Cor               | Hex       | Uso                          |
-| ----------------- | --------- | ---------------------------- |
-| Fundo             | #1a1a1a   | Corpo da página            |
-| Fundo alternativo | #242424   | Cards e caixas             |
-| Texto             | #f5f5f5   | Textos principais          |
-| Texto suave       | #b3b3b3   | Parágrafos                 |
-| Destaque          | #ffcc00   | Títulos, botões, links     |
-| Secundária        | #e63946   | Badge de esgotado          |
-| Borda             | #333      | Bordas sutis               |
+| Cor               | Escuro (Padrão)   | Claro (Marrom)   | Uso                        |
+| ----------------- | ----------------- | ---------------- | -------------------------- |
+| Fundo             | #1a1a1a         | #f8f9fa        | Corpo da página            |
+| Fundo alternativo | #242424         | #ffffff        | Cards e caixas             |
+| Texto             | #f5f5f5         | #3e2723        | Textos principais          |
+| Texto suave       | #b3b3b3         | #5d4037        | Parágrafos                 |
+| Destaque          | #ffcc00         | #d4a017        | Títulos, botões, links     |
+| Secundária        | #e63946         | #c1121f        | Badge de esgotado          |
+| Sucesso           | #2ecc71         | #2ecc71        | Validação e sucesso        |
 ```
 
 ## 🚀 Como Executar o Projeto
 
-**⚠️ IMPORTANTE:** Como usamos TypeScript, **é preciso compilar** antes de ver as mudanças no navegador.
+**⚠️ IMPORTANTE:** Como usamos TypeScript e ES6 Modules, **é obrigatório usar o Live Server** e compilar o código.
 
 ### 1. Abra o terminal na pasta `v2-js8-css8`
 
@@ -87,25 +91,27 @@ v2-js8-css8/
 npm install
 ```
 
-### 3. Compile o TypeScript para JavaScript
+### 3. Compile o TypeScript
 
 ```bash
 npm run build
 ```
 
-### 4. Abra o `cardapio.html` via **Live Server**
+### 4. Abra o `index.html` via **Live Server**
 
-> 💡 **Dica de Desenvolvimento:** Se estiver fazendo alterações frequentes, use `npm run watch` em um terminal separado. Ele recompila automaticamente ao salvar os arquivos `.ts`.
+> 💡 **Dica de Desenvolvimento:** Rode `npm run watch` em um terminal separado para recompilar automaticamente ao salvar os arquivos `.ts`.
 
 ## 🔍 Testes Realizados
 
 ```text
-- [x] A pasta src/ compila para dist/ sem erros
-- [x] O botão "Adicionar" cria a estrutura do carrinho
-- [x] O carrinho é um Singleton e mantém os itens
-- [x] O Strategy retorna mensagens corretas no checkout
-- [x] O TypeScript avisa se houver erro de tipo
-- [x] O site roda 100% com os arquivos compilados
+- [x] O código TypeScript compila sem erros
+- [x] O logo aparece em todas as páginas e no rodapé
+- [x] O fundo com imagem de chef funciona e não atrapalha a leitura
+- [x] O Dark/Light mode alterna as cores do texto e fundo
+- [x] O carrinho flutuante abre, fecha e salva no localStorage
+- [x] O checkout valida os campos e exibe o confetti
+- [x] Os ícones SVG da página "Sobre" herdam a cor de destaque
+- [x] O site é responsivo (desktop, tablet e mobile)
 ```
 
 ## 🆚 Evolução: v2-js7-css7 → v2-js8-css8
@@ -115,9 +121,11 @@ npm run build
 | ---------------------- | --------------------- | -------------------------- |
 | Linguagem              | JavaScript (ES6)      | ✅ TypeScript (strict)     |
 | Tipagem                | ❌                    | ✅ Interfaces e Types      |
-| Organização            | js/                   | ✅ src/ e dist/            |
-| Compilação             | ❌                    | ✅ via tsc                 |
-| Debug                  | Direto no JS          | ✅ Source Maps             |
+| Logo                   | Texto simples         | ✅ Logo 3D em CSS          |
+| Interface Visual       | Básica                | ✅ Premium (Neon, Glass)   |
+| Ícones                 | Emojis                | ✅ SVGs minimalistas       |
+| Modo Claro             | Preto e Branco        | ✅ Marrom Café e Dourado   |
+| Fundo                  | Cor sólida            | ✅ Imagem de chef com blur |
 ```
 
 ## 🗺️ Roadmap
@@ -125,34 +133,30 @@ npm run build
 ```text
 | Módulo        | Foco                              | Status |
 | ------------- | --------------------------------- | ------ |
-| v2-js1-css1   | Cores, fontes, saudação, relógio  | ✅     |
-| v2-js2-css2   | Flexbox, Grid, Cards, Animações   | ✅     |
-| v2-js3-css3   | localStorage + carrinho flutuante | ✅     |
-| v2-js4-css4   | Checkout validado + estilizado    | ✅     |
-| v2-js5-css5   | Dark mode + responsividade + a11y | ✅     |
-| v2-js6-css6   | Fetch/API + skeleton + confetti   | ✅     |
-| v2-js7-css7   | OOP + Design Patterns             | ✅     |
-| v2-js8-css8   | TypeScript + Strict Types         | ✅     |
-| v2-js9-css9   | Testes Unitários (Jest)           | ⏳     |
+| v2-js1 a js7  | HTML, CSS, JS, OOP e Patterns     | ✅     |
+| v2-js8-css8   | TypeScript + Identidade Visual    | ✅     |
+| v2-js9-css9   | Testes Unitários (Jest + TS)      | ⏳     |
+| v2-js10-css10 | Deploy e Publicação (GitHub Pages)| ⏳     |
 ```
 
 ## 🧠 Aprendizados-Chave
 
 ```text
-| Conceito           | O que foi aprendido                                      |
-| ------------------ | -------------------------------------------------------- |
-| Interfaces         | Definir a "forma" dos objetos e contratos                |
-| Type Assertions    | Garantir tipos em retornos do DOM (as HTMLButtonElement) |
-| Compilação (tsc)   | Transformar TS em JS para o navegador entender           |
-| tsconfig.json      | Configurar o rigor do compilador                         |
-| Source Maps        | Debugar arquivos .ts diretamente no Chrome               |
+| Conceito           | O que foi aprendido                                  |
+| ------------------ | ---------------------------------------------------- |
+| TypeScript         | Interfaces, Type Assertions e Compilação             |
+| Glassmorphism      | Efeito de vidro fosco com backdrop-filter            |
+| SVG Inline         | Ícones escaláveis que herdam a cor do texto          |
+| Floating Labels    | Inputs modernos sem precisar de JavaScript extra     |
+| CSS Variables      | Design System com troca de tema em tempo real        |
+| Neon Glow          | Efeito de brilho com múltiplas sombras (box-shadow)  |
 ```
 
 ## 👨‍💻 Autor
 
 **Atividade 2 – Linguagem de Marcação**  
 SA 1 – Desafio 2: Dando vida ao conteúdo com HTML  
-**Módulo extra:** Evolução v2 + JS + CSS (nível 8 - TypeScript)
+**Módulo extra:** Evolução v2 + JS + CSS (nível 8 - TypeScript + UI Premium)
 
 ## 📄 Licença
 
@@ -172,6 +176,7 @@ v2-js8-css8/
 ├── sobre.html          ✅
 ├── contato.html        ✅
 ├── produtos.json       ✅
+├── favicon.svg         ✅
 ├── README.md           ✅ (este arquivo)
 ├── package.json        ✅
 ├── tsconfig.json       ✅
@@ -184,10 +189,7 @@ v2-js8-css8/
 │   ├── cardapio.ts     ✅
 │   ├── carrinho.ts     ✅
 │   ├── checkout.ts     ✅
-│   └── models/
-│       ├── Produto.ts  ✅
-│       ├── Carrinho.ts ✅
-│       └── Pagamento.ts✅
+│   └── models/         ✅
 │
-└── dist/               ✅ (gerado pelo npm run build)
+└── dist/               ✅ (compilado)
 ```

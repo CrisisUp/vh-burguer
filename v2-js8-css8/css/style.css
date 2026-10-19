@@ -1,9 +1,14 @@
 /* ============================================================
-   VH BURGER - Estilos Globais (js1-css1)
+   VH BURGER - FOLHA DE ESTILO GLOBAL (v2-js8-css8)
+   Autor: Dev Team VH Burger
+   Descrição: CSS unificado e refatorado (Design System + Componentes)
    ============================================================ */
 
-/* --- 1. Variáveis de Cor --- */
+/* ============================================================
+   1. VARIÁVEIS GLOBAIS (Design System)
+   ============================================================ */
 :root {
+  /* Cores do Tema Escuro (Padrão) */
   --cor-fundo: #1a1a1a;
   --cor-fundo-alt: #242424;
   --cor-texto: #f5f5f5;
@@ -12,16 +17,30 @@
   --cor-destaque-hover: #ffd633;
   --cor-secundaria: #e63946;
   --cor-borda: #333;
+  --cor-sucesso: #2ecc71;
 }
 
-/* --- 2. Reset Básico --- */
+/* Cores do Tema Claro */
+[data-tema="claro"] {
+  --cor-fundo: #f8f9fa;
+  --cor-fundo-alt: #ffffff;
+  --cor-texto: #3e2723;
+  --cor-texto-suave: #5d4037;
+  --cor-destaque: #d4a017;
+  --cor-destaque-hover: #b8860b;
+  --cor-secundaria: #c1121f;
+  --cor-borda: #e0e0e0;
+}
+
+/* ============================================================
+   2. RESET E ESTILOS BASE
+   ============================================================ */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* --- 3. Corpo da Página --- */
 body {
   font-family:
     "Inter",
@@ -31,70 +50,81 @@ body {
   background-color: var(--cor-fundo);
   color: var(--cor-texto);
   line-height: 1.6;
-  max-width: 900px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 20px;
-}
-
-/* --- 4. Cabeçalho --- */
-header {
-  text-align: center;
-  padding: 30px 0 20px;
-  border-bottom: 3px solid var(--cor-destaque);
-  margin-bottom: 30px;
-}
-
-h1 {
-  font-size: 2.5rem;
-  color: var(--cor-destaque);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-
-/* Saudação dinâmica (inserida via JS) */
-#saudacao-topo {
-  font-size: 1rem;
-  color: var(--cor-texto-suave);
-  margin-bottom: 15px;
-  font-style: italic;
-}
-
-/* --- 5. Navegação --- */
-nav {
-  display: flex;
-  justify-content: center;
-  gap: 5px;
-  flex-wrap: wrap;
-  padding: 15px 0;
-}
-
-nav a {
-  color: var(--cor-texto);
-  text-decoration: none;
-  padding: 8px 16px;
-  border-radius: 4px;
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
-  font-weight: 500;
 }
 
-nav a:hover {
-  background-color: var(--cor-destaque);
-  color: var(--cor-fundo);
+/* Acessibilidade (Foco) */
+*:focus-visible {
+  outline: 3px solid var(--cor-destaque);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
-/* Página ativa (via JS) */
-nav a.ativo {
+/* Skip Link */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 10px;
   background-color: var(--cor-destaque);
   color: var(--cor-fundo);
+  padding: 10px 20px;
+  border-radius: 0 0 8px 8px;
+  z-index: 9999;
   font-weight: bold;
+  transition: top 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+.skip-link:focus {
+  top: 0;
+  opacity: 1;
+  pointer-events: auto;
 }
 
-/* --- 6. Títulos e Subtítulos --- */
-h2 {
+/* Fundo com Imagem e Overlay */
+.fundo-chef {
+  background-image:
+    linear-gradient(135deg, rgba(20, 10, 5, 0.95), rgba(30, 15, 5, 0.85)),
+    url("https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=1600&q=80");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-color: #140a05;
+}
+body.fundo-chef {
+  color: var(--cor-texto);
+}
+
+/* Efeito de vidro fosco nas caixas principais */
+.fundo-chef .card-destaque,
+.fundo-chef .timeline-content,
+.fundo-chef .depoimento,
+.fundo-chef .valor-card,
+.fundo-chef .membro,
+.fundo-chef .checkout-wrapper,
+.fundo-chef .resumo-pedido {
+  background-color: rgba(36, 36, 36, 0.85);
+  backdrop-filter: blur(8px);
+}
+
+/* ============================================================
+   3. TIPOGRAFIA E ELEMENTOS DE TEXTO
+   ============================================================ */
+h1,
+h2,
+h3,
+h4 {
   color: var(--cor-destaque);
+  line-height: 1.2;
+}
+
+h2 {
   font-size: 1.8rem;
   margin: 30px 0 15px;
   border-left: 4px solid var(--cor-secundaria);
@@ -107,7 +137,6 @@ h3 {
   margin: 20px 0 10px;
 }
 
-/* --- 7. Parágrafos e Textos --- */
 p {
   margin-bottom: 15px;
   color: var(--cor-texto-suave);
@@ -117,113 +146,131 @@ strong {
   color: var(--cor-texto);
   font-weight: 600;
 }
-
 em {
   color: var(--cor-destaque);
 }
+mark {
+  background-color: var(--cor-destaque);
+  color: var(--cor-fundo);
+  padding: 0 4px;
+  border-radius: 3px;
+}
 
-/* --- 8. Linhas Horizontais --- */
 hr {
   border: none;
   border-top: 1px solid var(--cor-borda);
   margin: 30px 0;
 }
 
-/* --- 9. Listas --- */
-ul,
-ol {
-  margin: 15px 0 20px 30px;
-  color: var(--cor-texto-suave);
-}
-
-li {
-  margin-bottom: 8px;
-}
-
-/* --- 10. Rodapé --- */
-footer {
-  text-align: center;
-  padding: 30px 0 20px;
-  margin-top: 40px;
-  border-top: 1px solid var(--cor-borda);
-  color: var(--cor-texto-suave);
-  font-size: 0.9rem;
-}
-
-/* Relógio no rodapé (inserido via JS) */
-#relogio {
-  color: var(--cor-destaque);
-  font-weight: bold;
-  font-variant-numeric: tabular-nums;
-}
-
-/* --- 11. Botão Voltar ao Topo --- */
-#btn-topo {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: var(--cor-destaque);
-  color: var(--cor-fundo);
-  border: none;
-  padding: 12px 18px;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-  display: none; /* Escondido por padrão */
-  transition:
-    transform 0.2s ease,
-    background-color 0.2s ease;
-  z-index: 999;
-}
-
-#btn-topo:hover {
-  background-color: var(--cor-destaque-hover);
-  transform: scale(1.1);
-}
-
-#btn-topo.visivel {
-  display: block;
-}
-
-/* --- 12. Caixas de Destaque --- */
-.destaque-box {
-  background-color: var(--cor-fundo-alt);
-  border-left: 4px solid var(--cor-destaque);
-  padding: 15px 20px;
-  margin: 20px 0;
-  border-radius: 4px;
-}
-
-/* --- 13. Links (fora da nav) --- */
 a {
   color: var(--cor-destaque);
   text-decoration: none;
+  transition: color 0.2s;
 }
-
 a:hover {
   text-decoration: underline;
 }
 
-/* Exceção: links dentro da nav (para não sublinhar) */
-nav a:hover {
+/* ============================================================
+   4. LOGO DA MARCA (CSS Puro)
+   ============================================================ */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 25px;
+  text-decoration: none;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  transition: transform 0.3s ease;
+}
+.logo:hover {
+  transform: scale(1.05);
   text-decoration: none;
 }
 
-/* ============================================================
-   NOVIDADES DA v2-js2-css2
-   ============================================================ */
+.logo-icone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 130px;
+  height: 130px;
+  background-color: var(--cor-fundo-alt);
+  border-radius: 50%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+  border: 4px solid var(--cor-destaque);
+}
 
-/* --- 14. HEADER COM FLEXBOX --- */
+.pao-cima {
+  width: 75px;
+  height: 28px;
+  background-color: #d4a017;
+  border-radius: 40px 40px 10px 10px;
+  margin-bottom: 4px;
+}
+.carne {
+  width: 80px;
+  height: 18px;
+  background-color: #5c3a21;
+  border-radius: 8px;
+  margin-bottom: 4px;
+}
+.queijo {
+  width: 70px;
+  height: 10px;
+  background-color: var(--cor-destaque);
+  border-radius: 4px;
+  margin-bottom: 4px;
+  transform: rotate(-5deg);
+}
+.pao-baixo {
+  width: 75px;
+  height: 18px;
+  background-color: #d4a017;
+  border-radius: 10px 10px 40px 40px;
+}
+
+.logo-texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1;
+}
+.logo-texto .vh {
+  font-size: 4.5rem;
+  font-weight: 800;
+  color: var(--cor-destaque);
+  letter-spacing: -2px;
+}
+.logo-texto .burger {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--cor-texto);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   5. CABEÇALHO E NAVEGAÇÃO
+   ============================================================ */
 header {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
   padding: 30px 0 20px;
+  border-bottom: 3px solid var(--cor-destaque);
+  margin-bottom: 30px;
+  position: relative;
 }
 
-/* --- 15. MENU COM FLEXBOX --- */
+#btn-menu-mobile {
+  display: none;
+}
+#saudacao-topo {
+  display: none;
+}
+
 nav {
   display: flex;
   justify-content: center;
@@ -233,25 +280,565 @@ nav {
 }
 
 nav a {
+  color: var(--cor-texto);
   padding: 10px 20px;
   border-radius: 8px;
   transition: all 0.3s ease;
+  font-weight: 500;
 }
-
 nav a:hover {
   background-color: var(--cor-destaque);
   color: var(--cor-fundo);
+  text-decoration: none;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 204, 0, 0.3);
 }
-
 nav a.ativo {
   background-color: var(--cor-destaque);
   color: var(--cor-fundo);
   font-weight: bold;
 }
 
-/* --- 16. GRID DE PRODUTOS --- */
+/* ============================================================
+   6. COMPONENTES GLOBAIS (Botões, Toasts)
+   ============================================================ */
+.btn-hero {
+  display: inline-block;
+  background-color: var(--cor-destaque);
+  color: var(--cor-fundo);
+  padding: 15px 40px;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(255, 204, 0, 0.4);
+}
+.btn-hero:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 25px rgba(255, 204, 0, 0.6);
+  text-decoration: none;
+}
+
+.btn-secundario {
+  display: inline-block;
+  background-color: transparent;
+  color: var(--cor-destaque);
+  border: 2px solid var(--cor-destaque);
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+.btn-secundario:hover {
+  background-color: var(--cor-destaque);
+  color: var(--cor-fundo);
+  text-decoration: none;
+}
+
+/* Toast (Notificação) */
+.toast {
+  position: fixed;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--cor-destaque);
+  color: var(--cor-fundo);
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 10000;
+  transition: top 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.toast.visivel {
+  top: 20px;
+}
+
+/* ============================================================
+   7. HOME (Hero Section, Destaques, Depoimentos)
+   ============================================================ */
+.hero-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 60px 0;
+  min-height: 70vh;
+  animation: fadeIn 1s ease forwards;
+}
+
+.hero-content {
+  flex: 1;
+  max-width: 500px;
+}
+.hero-titulo {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--cor-texto);
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+.hero-titulo span {
+  color: var(--cor-destaque);
+}
+.hero-subtitulo {
+  font-size: 1.2rem;
+  color: var(--cor-texto-suave);
+  margin-bottom: 30px;
+}
+
+.hero-imagem {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+.hero-imagem::before {
+  content: "";
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background-color: var(--cor-destaque);
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.2;
+  z-index: -1;
+}
+.hero-imagem img {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 50%;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  animation: float 4s ease-in-out infinite;
+  border: 5px solid var(--cor-destaque);
+}
+
+/* Destaques */
+.destaques-section {
+  padding: 60px 0;
+  text-align: center;
+}
+.destaques-section h2 {
+  font-size: 2.2rem;
+  margin-bottom: 40px;
+  border-left: none;
+  padding-left: 0;
+  color: var(--cor-destaque);
+}
+.destaques-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.card-destaque {
+  background-color: rgba(36, 36, 36, 0.85);
+  backdrop-filter: blur(8px);
+  border-radius: 15px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid var(--cor-borda);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+.card-destaque:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+  border-color: var(--cor-destaque);
+}
+.card-destaque img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.5s ease;
+  border-bottom: 3px solid var(--cor-destaque);
+}
+.card-destaque:hover img {
+  transform: scale(1.08);
+}
+.card-destaque-info {
+  padding: 25px 20px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.card-destaque-info h3 {
+  font-size: 1.4rem;
+  color: var(--cor-destaque);
+  margin-bottom: 10px;
+}
+.card-destaque-info p {
+  font-size: 0.95rem;
+  color: var(--cor-texto-suave);
+  margin-bottom: 20px;
+  line-height: 1.5;
+  flex-grow: 1;
+}
+.card-destaque-info .preco {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--cor-texto);
+  display: block;
+}
+.center-btn {
+  display: flex;
+  justify-content: center;
+}
+
+/* Depoimentos */
+.depoimentos-section {
+  padding: 60px 0;
+  text-align: center;
+  margin: 40px 0;
+}
+.depoimentos-section h2 {
+  font-size: 2.2rem;
+  margin-bottom: 40px;
+  border-left: none;
+  padding-left: 0;
+  color: var(--cor-destaque);
+}
+.depoimentos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  padding: 0 20px;
+}
+
+.depoimento {
+  background-color: rgba(36, 36, 36, 0.85);
+  backdrop-filter: blur(8px);
+  padding: 30px;
+  border-radius: 15px;
+  border: 1px solid var(--cor-borda);
+  position: relative;
+  text-align: left;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.depoimento:hover {
+  transform: translateY(-5px);
+  border-color: var(--cor-destaque);
+  box-shadow: 0 15px 35px rgba(255, 204, 0, 0.1);
+}
+.depoimento-aspas {
+  font-size: 5rem;
+  font-family: serif;
+  color: var(--cor-destaque);
+  opacity: 0.2;
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  line-height: 1;
+}
+.depoimento p {
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--cor-texto-suave);
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+  flex-grow: 1;
+}
+.depoimento-autor {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 15px;
+  margin-top: auto;
+}
+.depoimento-autor .nome {
+  color: var(--cor-destaque);
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+.depoimento-autor .estrelas {
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+}
+
+/* ============================================================
+   8. SOBRE (Timeline, Valores, Equipe, Citação)
+   ============================================================ */
+.sobre-hero {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)),
+    url("https://images.unsplash.com/photo-1550547660-d9450f859349?w=1200&q=80");
+  background-size: cover;
+  background-position: center;
+  border-radius: 20px;
+  padding: 100px 40px;
+  text-align: center;
+  margin-bottom: 60px;
+  animation: fadeIn 1s ease;
+}
+.sobre-hero-content h2 {
+  font-size: 3rem;
+  color: var(--cor-destaque);
+  margin-bottom: 15px;
+  border-left: none;
+  padding-left: 0;
+}
+.sobre-hero-content p {
+  font-size: 1.2rem;
+  color: var(--cor-texto);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.historia-section {
+  margin: 60px 0;
+}
+.historia-section h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+  border-left: none;
+  padding-left: 0;
+}
+.timeline {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 3px;
+  background-color: var(--cor-borda);
+  transform: translateX(-50%);
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 40px;
+  width: 50%;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+.timeline-item:nth-child(odd) {
+  left: 0;
+  text-align: right;
+}
+.timeline-item:nth-child(even) {
+  left: 50%;
+  text-align: left;
+}
+.timeline-dot {
+  position: absolute;
+  top: 10px;
+  width: 20px;
+  height: 20px;
+  background-color: var(--cor-destaque);
+  border-radius: 50%;
+  border: 4px solid var(--cor-fundo);
+  z-index: 1;
+}
+.timeline-item:nth-child(odd) .timeline-dot {
+  right: -10px;
+}
+.timeline-item:nth-child(even) .timeline-dot {
+  left: -10px;
+}
+.timeline-content {
+  background-color: var(--cor-fundo-alt);
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid var(--cor-borda);
+  transition: transform 0.3s ease;
+}
+.timeline-content:hover {
+  transform: translateY(-3px);
+  border-color: var(--cor-destaque);
+}
+.timeline-content h3 {
+  color: var(--cor-destaque);
+  margin-bottom: 10px;
+}
+
+.valores-section {
+  margin: 60px 0;
+  text-align: center;
+}
+.valores-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  border-left: none;
+  padding-left: 0;
+}
+.valores-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+}
+/* Substitua a regra .valor-icone por estas: */
+.valor-card {
+  background-color: var(--cor-fundo-alt);
+  padding: 30px 20px;
+  border-radius: 12px;
+  border: 1px solid var(--cor-borda);
+  transition: all 0.3s ease;
+  display: flex; /* ADICIONADO */
+  flex-direction: column; /* ADICIONADO */
+  align-items: center; /* ADICIONADO: centraliza o ícone SVG */
+}
+
+.valor-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(255, 204, 0, 0.15);
+  border-color: var(--cor-destaque);
+}
+
+/* O estilo do Ícone SVG (NOVO) */
+.valor-icone-svg {
+  width: 48px;
+  height: 48px;
+  color: var(--cor-destaque); /* Puxa a cor amarela do tema */
+  margin-bottom: 20px;
+  transition: transform 0.3s ease;
+}
+
+.valor-card:hover .valor-icone-svg {
+  transform: scale(1.1); /* Efeito de zoom suave */
+}
+
+.valor-card h3 {
+  color: var(--cor-destaque);
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.valor-card p {
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--cor-texto-suave);
+}
+
+.citacao-section {
+  margin: 80px 0;
+  text-align: center;
+}
+.citacao-section blockquote {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 40px;
+  background-color: var(--cor-fundo-alt);
+  border-left: 5px solid var(--cor-destaque);
+  border-radius: 10px;
+  position: relative;
+}
+.citacao-section blockquote::before {
+  content: "“";
+  position: absolute;
+  top: -20px;
+  left: 20px;
+  font-size: 6rem;
+  color: var(--cor-destaque);
+  opacity: 0.3;
+  font-family: serif;
+}
+.citacao-section p {
+  font-size: 1.4rem;
+  font-style: italic;
+  color: var(--cor-texto);
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+.citacao-section footer {
+  color: var(--cor-texto-suave);
+  font-size: 1rem;
+}
+
+.equipe-section {
+  margin: 60px 0;
+  text-align: center;
+}
+.equipe-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  border-left: none;
+  padding-left: 0;
+}
+.equipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.membro {
+  background-color: var(--cor-fundo-alt);
+  padding: 20px;
+  border-radius: 15px;
+  border: 1px solid var(--cor-borda);
+  transition: all 0.3s ease;
+}
+.membro:hover {
+  transform: translateY(-5px);
+  border-color: var(--cor-destaque);
+}
+.membro img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border: 3px solid var(--cor-destaque);
+}
+.membro h3 {
+  color: var(--cor-texto);
+  margin-bottom: 5px;
+}
+.membro p {
+  color: var(--cor-destaque);
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+/* ============================================================
+   9. CARDÁPIO (Hero, Grid e Cards)
+   ============================================================ */
+.cardapio-hero {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)),
+    url("https://images.unsplash.com/photo-1550547660-d9450f859349?w=1200&q=80");
+  background-size: cover;
+  background-position: center;
+  padding: 80px 20px;
+  border-radius: 20px;
+  text-align: center;
+  margin-bottom: 40px;
+  animation: fadeIn 0.8s ease;
+}
+.cardapio-hero h2 {
+  font-size: 3rem;
+  color: var(--cor-destaque);
+  border-left: none;
+  padding-left: 0;
+  margin-bottom: 10px;
+  text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+}
+.cardapio-hero p {
+  font-size: 1.2rem;
+  color: var(--cor-texto);
+}
+.cardapio-container h2 {
+  text-align: center;
+  margin-bottom: 40px;
+  border-left: none;
+  padding-left: 0;
+}
+
 .grid-produtos {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -259,7 +846,6 @@ nav a.ativo {
   margin: 30px 0;
 }
 
-/* --- 17. CARD DE PRODUTO --- */
 .card-produto {
   background-color: var(--cor-fundo-alt);
   border: 1px solid var(--cor-borda);
@@ -274,27 +860,39 @@ nav a.ativo {
   animation: fadeInUp 0.5s ease forwards;
   opacity: 0;
   transform: translateY(20px);
+  position: relative;
 }
-
 .card-produto:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 24px rgba(255, 204, 0, 0.2);
   border-color: var(--cor-destaque);
 }
-
+.card-produto .imagem-container {
+  overflow: hidden;
+  border-radius: 8px;
+  margin: -20px -20px 15px -20px;
+  height: 180px;
+}
+.card-produto .imagem-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.card-produto:hover .imagem-container img {
+  transform: scale(1.1);
+}
 .card-produto h3 {
   color: var(--cor-destaque);
   font-size: 1.2rem;
   margin: 0 0 10px;
 }
-
 .card-produto .descricao {
   color: var(--cor-texto-suave);
   font-size: 0.9rem;
   margin-bottom: 15px;
   flex-grow: 1;
 }
-
 .card-produto .preco {
   color: var(--cor-destaque);
   font-size: 1.4rem;
@@ -302,31 +900,54 @@ nav a.ativo {
   margin-bottom: 15px;
 }
 
+.btn-add-carrinho,
 .card-produto button {
-  background-color: var(--cor-destaque);
-  color: var(--cor-fundo);
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
+  background: transparent;
+  color: var(--cor-destaque);
+  border: 2px solid var(--cor-destaque);
+  border-radius: 8px;
+  padding: 10px;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(255, 204, 0, 0.2);
   width: 100%;
 }
-
-.card-produto button:hover {
-  background-color: var(--cor-destaque-hover);
-  transform: scale(1.02);
+.btn-add-carrinho:hover:not(:disabled),
+.card-produto button:hover:not(:disabled) {
+  background: var(--cor-destaque);
+  color: var(--cor-fundo);
+  box-shadow:
+    0 0 20px rgba(255, 204, 0, 0.8),
+    0 0 40px rgba(255, 204, 0, 0.4);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
-
+.btn-add-carrinho:disabled,
 .card-produto button:disabled {
-  background-color: #666;
-  color: #999;
+  border-color: var(--cor-borda);
+  color: var(--cor-texto-suave);
   cursor: not-allowed;
-  transform: none;
+  box-shadow: none;
+  opacity: 0.5;
+}
+.btn-add-carrinho::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 300px;
+  background: rgba(255, 204, 0, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.5s ease;
+}
+.btn-add-carrinho:hover:not(:disabled)::after {
+  transform: translate(-50%, -50%) scale(1);
 }
 
-/* Badge "Esgotado" */
 .badge-esgotado {
   display: inline-block;
   background-color: var(--cor-secundaria);
@@ -339,88 +960,9 @@ nav a.ativo {
   text-transform: uppercase;
 }
 
-/* --- 18. ANIMAÇÕES --- */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Atraso escalonado nos cards */
-.card-produto:nth-child(1) {
-  animation-delay: 0.05s;
-}
-.card-produto:nth-child(2) {
-  animation-delay: 0.1s;
-}
-.card-produto:nth-child(3) {
-  animation-delay: 0.15s;
-}
-.card-produto:nth-child(4) {
-  animation-delay: 0.2s;
-}
-.card-produto:nth-child(5) {
-  animation-delay: 0.25s;
-}
-.card-produto:nth-child(6) {
-  animation-delay: 0.3s;
-}
-
-/* --- 19. MENSAGEM DE "CARREGANDO" --- */
-.carregando {
-  text-align: center;
-  padding: 30px;
-  color: var(--cor-destaque);
-  font-style: italic;
-}
-
-/* --- 20. FLEXBOX NO RODAPÉ --- */
-footer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  text-align: center;
-  padding: 30px 0 20px;
-  margin-top: 40px;
-  border-top: 1px solid var(--cor-borda);
-  color: var(--cor-texto-suave);
-  font-size: 0.9rem;
-}
-
-/* --- 21. BOTÕES DO FORMULÁRIO/CHECKOUT --- */
-.botoes-flex {
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: 20px 0;
-}
-
-.botoes-flex button {
-  padding: 12px 24px;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 1rem;
-}
-
-.botoes-flex button:hover {
-  transform: translateY(-2px);
-}
-
 /* ============================================================
-   NOVIDADES DA v2-js3-css3 — CARRINHO FLUTUANTE
+   10. CARRINHO FLUTUANTE
    ============================================================ */
-
-/* --- 22. BOTÃO FLUTUANTE DO CARRINHO --- */
 #btn-carrinho-flutuante {
   position: fixed;
   bottom: 20px;
@@ -440,12 +982,10 @@ footer {
   gap: 8px;
   transition: all 0.3s ease;
 }
-
 #btn-carrinho-flutuante:hover {
   transform: scale(1.05);
   box-shadow: 0 6px 20px rgba(255, 204, 0, 0.6);
 }
-
 #btn-carrinho-flutuante .badge {
   background-color: var(--cor-secundaria);
   color: white;
@@ -457,7 +997,6 @@ footer {
   text-align: center;
 }
 
-/* --- 23. OVERLAY (fundo escuro) --- */
 #overlay-carrinho {
   position: fixed;
   top: 0;
@@ -472,13 +1011,11 @@ footer {
     opacity 0.3s ease,
     visibility 0.3s ease;
 }
-
 #overlay-carrinho.ativo {
   opacity: 1;
   visibility: visible;
 }
 
-/* --- 24. PAINEL LATERAL DO CARRINHO --- */
 #painel-carrinho {
   position: fixed;
   top: 0;
@@ -490,16 +1027,14 @@ footer {
   z-index: 1002;
   display: flex;
   flex-direction: column;
-  transform: translateX(100%); /* Escondido fora da tela */
+  transform: translateX(100%);
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
 }
-
 #painel-carrinho.aberto {
   transform: translateX(0);
 }
 
-/* --- 25. HEADER DO CARRINHO --- */
 .carrinho-header {
   padding: 20px;
   border-bottom: 2px solid var(--cor-destaque);
@@ -507,13 +1042,11 @@ footer {
   justify-content: space-between;
   align-items: center;
 }
-
 .carrinho-header h3 {
   color: var(--cor-destaque);
   margin: 0;
   font-size: 1.3rem;
 }
-
 #btn-fechar-carrinho {
   background: none;
   border: none;
@@ -524,18 +1057,15 @@ footer {
   line-height: 1;
   transition: color 0.2s ease;
 }
-
 #btn-fechar-carrinho:hover {
   color: var(--cor-secundaria);
 }
 
-/* --- 26. LISTA DE ITENS DO CARRINHO --- */
 .carrinho-itens {
   flex: 1;
   overflow-y: auto;
   padding: 15px;
 }
-
 .item-carrinho {
   display: flex;
   gap: 10px;
@@ -546,40 +1076,24 @@ footer {
   border-left: 3px solid var(--cor-destaque);
   animation: slideIn 0.3s ease;
 }
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
 .item-carrinho-info {
   flex: 1;
 }
-
 .item-carrinho-nome {
   font-weight: bold;
   color: var(--cor-texto);
   margin-bottom: 4px;
 }
-
 .item-carrinho-preco {
   color: var(--cor-destaque);
   font-size: 0.9rem;
 }
-
 .item-carrinho-controles {
   display: flex;
   align-items: center;
   gap: 5px;
   margin-top: 5px;
 }
-
 .item-carrinho-controles button {
   background-color: var(--cor-fundo-alt);
   color: var(--cor-texto);
@@ -591,19 +1105,16 @@ footer {
   font-weight: bold;
   transition: all 0.2s ease;
 }
-
 .item-carrinho-controles button:hover {
   background-color: var(--cor-destaque);
   color: var(--cor-fundo);
   border-color: var(--cor-destaque);
 }
-
 .item-carrinho-controles .quantidade {
   padding: 0 8px;
   font-weight: bold;
   color: var(--cor-destaque);
 }
-
 .btn-remover-item {
   background: none;
   border: none;
@@ -613,12 +1124,10 @@ footer {
   padding: 0 5px;
   transition: transform 0.2s ease;
 }
-
 .btn-remover-item:hover {
   transform: scale(1.2);
 }
 
-/* --- 27. CARRINHO VAZIO --- */
 .carrinho-vazio {
   text-align: center;
   padding: 40px 20px;
@@ -626,25 +1135,21 @@ footer {
   font-style: italic;
 }
 
-/* --- 28. RODAPÉ DO CARRINHO --- */
 .carrinho-footer {
   padding: 20px;
   border-top: 2px solid var(--cor-destaque);
   background-color: var(--cor-fundo);
 }
-
 .carrinho-total {
   display: flex;
   justify-content: space-between;
   margin-bottom: 15px;
   font-size: 1.1rem;
 }
-
 .carrinho-total strong {
   color: var(--cor-destaque);
   font-size: 1.3rem;
 }
-
 #btn-limpar-carrinho,
 #btn-finalizar-pedido {
   width: 100%;
@@ -657,129 +1162,109 @@ footer {
   transition: all 0.3s ease;
   margin-bottom: 8px;
 }
-
 #btn-finalizar-pedido {
   background-color: var(--cor-destaque);
   color: var(--cor-fundo);
 }
-
 #btn-finalizar-pedido:hover {
   background-color: var(--cor-destaque-hover);
   transform: translateY(-2px);
 }
-
 #btn-limpar-carrinho {
   background-color: transparent;
   color: var(--cor-secundaria);
   border: 1px solid var(--cor-secundaria);
 }
-
 #btn-limpar-carrinho:hover {
   background-color: var(--cor-secundaria);
   color: white;
 }
 
-/* --- 29. RESPONSIVIDADE DO CARRINHO --- */
-@media (max-width: 480px) {
-  #painel-carrinho {
-    width: 100vw;
-    max-width: 100vw;
-  }
-
-  #btn-carrinho-flutuante {
-    padding: 12px 16px;
-    font-size: 1rem;
-  }
-}
-
 /* ============================================================
-   NOVIDADES DA v2-js4-css4 — FORMULÁRIO DE CHECKOUT
+   11. CHECKOUT (Floating Labels e Mapas)
    ============================================================ */
-
-/* --- 30. CONTAINER DO CHECKOUT --- */
-.checkout-container {
-  max-width: 600px;
-  margin: 0 auto;
-  background-color: var(--cor-fundo-alt);
-  padding: 30px;
-  border-radius: 12px;
+.checkout-wrapper {
+  max-width: 700px;
+  margin: 40px auto;
+  background: var(--cor-fundo-alt);
+  padding: 40px;
+  border-radius: 20px;
   border: 1px solid var(--cor-borda);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.8s ease;
+}
+.checkout-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.checkout-header h2 {
+  border-left: none;
+  font-size: 2rem;
+  padding-left: 0;
+  color: var(--cor-destaque);
 }
 
-/* --- 31. FIELDSET E LEGEND --- */
+.input-group {
+  position: relative;
+  margin-bottom: 25px;
+}
+.input-group input,
+.input-group select {
+  width: 100%;
+  padding: 20px 15px 10px 15px;
+  background: var(--cor-fundo);
+  border: 2px solid var(--cor-borda);
+  border-radius: 10px;
+  color: var(--cor-texto);
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+.input-group input:focus,
+.input-group select:focus {
+  border-color: var(--cor-destaque);
+}
+.input-group label {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: var(--cor-texto-suave);
+  font-size: 1rem;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label,
+.input-group select:focus + label,
+.input-group select:valid + label {
+  top: 10px;
+  font-size: 0.75rem;
+  color: var(--cor-destaque);
+  font-weight: bold;
+}
+.input-group input.campo-invalido,
+.input-group select.campo-invalido {
+  border-color: var(--cor-secundaria);
+}
+.input-group input.campo-valido,
+.input-group select.campo-valido {
+  border-color: var(--cor-sucesso);
+}
+
 fieldset {
   border: 1px solid var(--cor-borda);
   border-radius: 8px;
   padding: 20px;
   margin-bottom: 25px;
 }
-
 legend {
   color: var(--cor-destaque);
   font-weight: bold;
   font-size: 1.1rem;
   padding: 0 10px;
 }
-
-/* --- 32. GRUPO DE FORMULÁRIO --- */
-.form-group {
-  margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-}
-
-.form-group label {
-  color: var(--cor-texto);
-  font-weight: 500;
-  margin-bottom: 6px;
-  font-size: 0.95rem;
-}
-
-.form-group label .obrigatorio {
-  color: var(--cor-secundaria);
-}
-
-/* --- 33. INPUTS E SELECTS --- */
-.form-group input,
-.form-group select,
-.form-group textarea {
-  background-color: var(--cor-fundo);
-  color: var(--cor-texto);
-  border: 2px solid var(--cor-borda);
-  border-radius: 8px;
-  padding: 12px 15px;
-  font-size: 1rem;
-  font-family: inherit;
-  transition: all 0.3s ease;
-  outline: none;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-  border-color: var(--cor-destaque);
-  box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.2);
-}
-
-.form-group input::placeholder {
-  color: #666;
-}
-
-/* --- 34. ESTADOS DE VALIDAÇÃO --- */
-.form-group input.campo-invalido,
-.form-group select.campo-invalido {
-  border-color: var(--cor-secundaria);
-  background-color: rgba(230, 57, 70, 0.05);
-}
-
-.form-group input.campo-valido,
-.form-group select.campo-valido {
-  border-color: #2ecc71;
-  background-color: rgba(46, 204, 113, 0.05);
-}
-
-/* --- 35. MENSAGEM DE ERRO --- */
 .erro {
   color: var(--cor-secundaria);
   font-size: 0.85rem;
@@ -787,32 +1272,16 @@ legend {
   display: none;
   animation: shake 0.3s ease;
 }
-
 .erro.ativo {
   display: block;
 }
 
-@keyframes shake {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-  25% {
-    transform: translateX(-5px);
-  }
-  75% {
-    transform: translateX(5px);
-  }
-}
-
-/* --- 36. BOTÕES DO FORMULÁRIO --- */
 .botoes-form {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
   margin-top: 20px;
 }
-
 .botoes-form button {
   flex: 1;
   min-width: 150px;
@@ -824,30 +1293,25 @@ legend {
   cursor: pointer;
   transition: all 0.3s ease;
 }
-
 #btn-enviar {
   background-color: var(--cor-destaque);
   color: var(--cor-fundo);
 }
-
 #btn-enviar:hover {
   background-color: var(--cor-destaque-hover);
   transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(255, 204, 0, 0.3);
 }
-
 #btn-limpar-form {
   background-color: transparent;
   color: var(--cor-texto-suave);
   border: 2px solid var(--cor-borda);
 }
-
 #btn-limpar-form:hover {
   background-color: var(--cor-borda);
   color: var(--cor-texto);
 }
 
-/* --- 37. RESUMO DO PEDIDO NO CHECKOUT --- */
 .resumo-pedido {
   background-color: var(--cor-fundo);
   border-left: 4px solid var(--cor-destaque);
@@ -855,19 +1319,16 @@ legend {
   border-radius: 8px;
   margin-bottom: 25px;
 }
-
 .resumo-pedido h4 {
   color: var(--cor-destaque);
   margin-bottom: 10px;
 }
-
 .resumo-linha {
   display: flex;
   justify-content: space-between;
   padding: 5px 0;
   color: var(--cor-texto-suave);
 }
-
 .resumo-linha.total {
   border-top: 1px solid var(--cor-borda);
   margin-top: 10px;
@@ -877,11 +1338,10 @@ legend {
   font-size: 1.2rem;
 }
 
-/* --- 38. MENSAGEM DE SUCESSO --- */
 .mensagem-sucesso {
   background-color: rgba(46, 204, 113, 0.15);
-  border: 2px solid #2ecc71;
-  color: #2ecc71;
+  border: 2px solid var(--cor-sucesso);
+  color: var(--cor-sucesso);
   padding: 20px;
   border-radius: 8px;
   margin-bottom: 20px;
@@ -889,50 +1349,158 @@ legend {
   text-align: center;
   font-weight: bold;
 }
-
 .mensagem-sucesso.ativo {
   display: block;
   animation: fadeInUp 0.5s ease;
 }
 
-/* --- 39. ALERTA DE CARRINHO VAZIO --- */
-.carrinho-vazio-alerta {
-  background-color: rgba(230, 57, 70, 0.15);
-  border: 2px solid var(--cor-secundaria);
-  color: var(--cor-secundaria);
-  padding: 20px;
-  border-radius: 8px;
+.mapa-container {
+  margin-top: 40px;
   text-align: center;
-  margin: 20px 0;
+}
+.mapa-placeholder {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)),
+    url("https://images.unsplash.com/photo-1524661135-423995f22d0b?w=800&q=80");
+  background-size: cover;
+  background-position: center;
+  height: 200px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  border: 1px solid var(--cor-borda);
+  transition: transform 0.3s ease;
+}
+.mapa-placeholder:hover {
+  transform: scale(1.02);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+.mapa-placeholder .pin {
+  font-size: 3rem;
+  animation: bounce 2s infinite;
+}
+.mapa-placeholder p {
+  background: rgba(0, 0, 0, 0.8);
+  padding: 8px 15px;
+  border-radius: 8px;
+  color: var(--cor-destaque);
+  font-weight: bold;
+  margin-top: 10px;
 }
 
 /* ============================================================
-   NOVIDADES DA v2-js5-css5 — TEMA E RESPONSIVIDADE
+   12. SKELETON LOADING, CONFETTI, RODAPÉ
    ============================================================ */
-
-/* --- 40. TEMA CLARO (padrão é escuro) --- */
-[data-tema="claro"] {
-  --cor-fundo: #f8f9fa;
-  --cor-fundo-alt: #ffffff;
-  --cor-texto: #1a1a1a;
-  --cor-texto-suave: #555555;
-  --cor-destaque: #d4a017;
-  --cor-destaque-hover: #b8860b;
-  --cor-secundaria: #c1121f;
-  --cor-borda: #dddddd;
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--cor-fundo-alt) 25%,
+    var(--cor-borda) 50%,
+    var(--cor-fundo-alt) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+.skeleton-card {
+  background-color: var(--cor-fundo-alt);
+  border: 1px solid var(--cor-borda);
+  border-radius: 12px;
+  padding: 20px;
+  overflow: hidden;
+}
+.skeleton-imagem {
+  width: calc(100% + 40px);
+  height: 180px;
+  margin: -20px -20px 15px -20px;
+  border-radius: 0;
+}
+.skeleton-titulo {
+  height: 24px;
+  width: 60%;
+  margin-bottom: 12px;
+}
+.skeleton-texto {
+  height: 14px;
+  width: 100%;
+  margin-bottom: 8px;
+}
+.skeleton-texto.curto {
+  width: 70%;
+}
+.skeleton-preco {
+  height: 24px;
+  width: 40%;
+  margin: 15px 0;
+}
+.skeleton-botao {
+  height: 40px;
+  width: 100%;
+  border-radius: 6px;
 }
 
-/* Ajuste de contraste em elementos específicos no modo claro */
-[data-tema="claro"] body {
-  background-color: var(--cor-fundo);
+.erro-rede {
+  background-color: rgba(230, 57, 70, 0.15);
+  border: 2px solid var(--cor-secundaria);
+  color: var(--cor-secundaria);
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  margin: 30px 0;
+  animation: fadeInUp 0.5s ease;
+}
+.erro-rede h3 {
+  color: var(--cor-secundaria);
+  margin-bottom: 10px;
+  font-size: 1.3rem;
+}
+.erro-rede button {
+  background-color: var(--cor-secundaria);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: all 0.3s ease;
+}
+.erro-rede button:hover {
+  background-color: #c1121f;
+  transform: translateY(-2px);
 }
 
-[data-tema="claro"] .card-produto {
-  background-color: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  top: -10px;
+  z-index: 9999;
+  pointer-events: none;
+  animation: confetti-fall 3s linear forwards;
 }
 
-/* --- 41. BOTÃO DE ALTERNAR TEMA --- */
+footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  padding: 30px 0 20px;
+  margin-top: 40px;
+  border-top: 1px solid var(--cor-borda);
+  color: var(--cor-texto-suave);
+  font-size: 0.9rem;
+}
+#relogio {
+  color: var(--cor-destaque);
+  font-weight: bold;
+  font-variant-numeric: tabular-nums;
+}
+
 #btn-tema {
   position: fixed;
   top: 20px;
@@ -952,235 +1520,68 @@ legend {
   justify-content: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
-
 #btn-tema:hover {
   transform: scale(1.1) rotate(15deg);
   background-color: var(--cor-destaque);
   color: var(--cor-fundo);
 }
 
-/* --- 42. BOTÃO MENU HAMBÚRGUER (oculto no desktop) --- */
-#btn-menu-mobile {
-  display: none;
-  background: none;
-  border: 2px solid var(--cor-destaque);
-  color: var(--cor-destaque);
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-size: 1.5rem;
+#btn-topo {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--cor-destaque);
+  color: var(--cor-fundo);
+  border: none;
+  padding: 12px 18px;
+  border-radius: 50%;
+  font-size: 1.2rem;
   cursor: pointer;
-  z-index: 1001;
-  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  display: none;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+  z-index: 999;
 }
-
-#btn-menu-mobile:hover {
-  background-color: var(--cor-destaque);
-  color: var(--cor-fundo);
+#btn-topo:hover {
+  background-color: var(--cor-destaque-hover);
+  transform: scale(1.1);
 }
-
-/* --- 43. SKIP LINK (Acessibilidade) --- */
-.skip-link {
-  position: absolute;
-  top: -100px;
-  left: 10px;
-  background-color: var(--cor-destaque);
-  color: var(--cor-fundo);
-  padding: 10px 20px;
-  border-radius: 0 0 8px 8px;
-  z-index: 9999;
-  text-decoration: none;
-  font-weight: bold;
-  transition: top 0.3s ease;
-}
-
-.skip-link:focus {
-  top: 0;
-  outline: 3px solid var(--cor-secundaria);
-}
-
-/* --- 44. FOCUS VISÍVEL (Navegação por teclado) --- */
-*:focus-visible {
-  outline: 3px solid var(--cor-destaque);
-  outline-offset: 3px;
-  border-radius: 4px;
-}
-
-/* --- 45. RESPONSIVIDADE — TABLET (até 768px) --- */
-@media (max-width: 768px) {
-  /* Cabeçalho fica em coluna */
-  header {
-    padding: 20px 10px;
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-
-  /* Esconde o nav padrão e mostra o hambúrguer */
-  #btn-menu-mobile {
-    display: block;
-    position: absolute;
-    top: 20px;
-    left: 20px;
-  }
-
-  header {
-    position: relative;
-  }
-
-  /* Menu em coluna, escondido por padrão */
-  nav {
-    display: none;
-    flex-direction: column;
-    width: 100%;
-    gap: 5px;
-    padding: 15px 0;
-    margin-top: 15px;
-  }
-
-  nav.menu-aberto {
-    display: flex;
-    animation: slideDown 0.3s ease;
-  }
-
-  nav a {
-    text-align: center;
-    padding: 12px;
-    background-color: var(--cor-fundo-alt);
-    border-radius: 6px;
-  }
-
-  @keyframes slideDown {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Grid do cardápio em 2 colunas */
-  .grid-produtos {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  }
-
-  /* Painel do carrinho ocupa 100% */
-  #painel-carrinho {
-    width: 100vw;
-    max-width: 100vw;
-  }
-
-  /* Checkout com padding menor */
-  .checkout-container {
-    padding: 20px 15px;
-  }
-}
-
-/* --- 46. RESPONSIVIDADE — MOBILE PEQUENO (até 480px) --- */
-@media (max-width: 480px) {
-  body {
-    padding: 10px;
-  }
-
-  h1 {
-    font-size: 1.6rem;
-  }
-
-  h2 {
-    font-size: 1.4rem;
-  }
-
-  /* Grid em 1 coluna */
-  .grid-produtos {
-    grid-template-columns: 1fr;
-  }
-
-  /* Botão flutuante do carrinho menor */
-  #btn-carrinho-flutuante {
-    padding: 10px 14px;
-    font-size: 1rem;
-    bottom: 15px;
-    left: 15px;
-  }
-
-  /* Botões do formulário empilhados */
-  .botoes-form {
-    flex-direction: column;
-  }
-
-  .botoes-form button {
-    min-width: 100%;
-  }
-
-  /* Tabela de resumo em coluna */
-  .resumo-linha {
-    flex-direction: column;
-    gap: 3px;
-  }
-
-  /* Botão de tema menor */
-  #btn-tema {
-    width: 40px;
-    height: 40px;
-    font-size: 1.2rem;
-    top: 10px;
-    right: 10px;
-  }
+#btn-topo.visivel {
+  display: block;
 }
 
 /* ============================================================
-   NOVIDADES DA v2-js6-css6 — SKELETON, IMAGENS E ANIMAÇÕES
+   13. ANIMAÇÕES E RESPONSIVIDADE (Media Queries)
    ============================================================ */
-
-/* --- 47. IMAGEM DO CARD DE PRODUTO --- */
-.card-produto .imagem-produto {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  background-color: var(--cor-fundo);
-  transition: transform 0.3s ease;
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-
-.card-produto:hover .imagem-produto {
-  transform: scale(1.05);
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
-
-/* Container da imagem para segurar o overflow */
-.card-produto .imagem-container {
-  overflow: hidden;
-  border-radius: 8px;
-  margin: -20px -20px 15px -20px;
-  height: 180px;
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
 }
-
-.card-produto .imagem-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-}
-
-.card-produto:hover .imagem-container img {
-  transform: scale(1.1);
-}
-
-/* --- 48. SKELETON LOADING --- */
-.skeleton {
-  background: linear-gradient(
-    90deg,
-    var(--cor-fundo-alt) 25%,
-    var(--cor-borda) 50%,
-    var(--cor-fundo-alt) 75%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-  border-radius: 4px;
-}
-
 @keyframes shimmer {
   0% {
     background-position: 200% 0;
@@ -1189,87 +1590,6 @@ legend {
     background-position: -200% 0;
   }
 }
-
-.skeleton-card {
-  background-color: var(--cor-fundo-alt);
-  border: 1px solid var(--cor-borda);
-  border-radius: 12px;
-  padding: 20px;
-  overflow: hidden;
-}
-
-.skeleton-imagem {
-  width: calc(100% + 40px);
-  height: 180px;
-  margin: -20px -20px 15px -20px;
-  border-radius: 0;
-}
-
-.skeleton-titulo {
-  height: 24px;
-  width: 60%;
-  margin-bottom: 12px;
-}
-
-.skeleton-texto {
-  height: 14px;
-  width: 100%;
-  margin-bottom: 8px;
-}
-
-.skeleton-texto.curto {
-  width: 70%;
-}
-
-.skeleton-preco {
-  height: 24px;
-  width: 40%;
-  margin: 15px 0;
-}
-
-.skeleton-botao {
-  height: 40px;
-  width: 100%;
-  border-radius: 6px;
-}
-
-/* --- 49. ERRO DE REDE --- */
-.erro-rede {
-  background-color: rgba(230, 57, 70, 0.15);
-  border: 2px solid var(--cor-secundaria);
-  color: var(--cor-secundaria);
-  padding: 30px;
-  border-radius: 12px;
-  text-align: center;
-  margin: 30px 0;
-  animation: fadeInUp 0.5s ease;
-}
-
-.erro-rede h3 {
-  color: var(--cor-secundaria);
-  margin-bottom: 10px;
-  font-size: 1.3rem;
-}
-
-.erro-rede button {
-  background-color: var(--cor-secundaria);
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 15px;
-  transition: all 0.3s ease;
-}
-
-.erro-rede button:hover {
-  background-color: #c1121f;
-  transform: translateY(-2px);
-}
-
-/* --- 50. ANIMAÇÕES AVANÇADAS --- */
-/* Confetti ao finalizar pedido */
 @keyframes confetti-fall {
   0% {
     transform: translateY(-100vh) rotate(0deg);
@@ -1280,18 +1600,16 @@ legend {
     opacity: 0;
   }
 }
-
-.confetti {
-  position: fixed;
-  width: 10px;
-  height: 10px;
-  top: -10px;
-  z-index: 9999;
-  pointer-events: none;
-  animation: confetti-fall 3s linear forwards;
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
-
-/* Pulso no badge do carrinho quando adiciona item */
 @keyframes pulse {
   0%,
   100% {
@@ -1301,80 +1619,152 @@ legend {
     transform: scale(1.3);
   }
 }
-
-.badge.pulsando {
-  animation: pulse 0.4s ease-in-out;
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
 }
-
-/* Float suave na imagem de destaque */
-@keyframes float {
+@keyframes bounce {
   0%,
   100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-5px);
+    transform: translateY(-15px);
   }
 }
 
-.card-produto:hover .imagem-produto {
-  animation: float 2s ease-in-out infinite;
+.badge.pulsando {
+  animation: pulse 0.4s ease-in-out;
 }
 
-/* --- 51. BOTÃO "TENTAR NOVAMENTE" --- */
-.btn-tentar-novamente {
-  background-color: var(--cor-destaque);
-  color: var(--cor-fundo);
-  border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: bold;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+@media (max-width: 768px) {
+  header {
+    padding: 20px 10px;
+  }
+  #btn-menu-mobile {
+    display: block;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: none;
+    border: 2px solid var(--cor-destaque);
+    color: var(--cor-destaque);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1001;
+  }
+  nav {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    gap: 5px;
+    padding: 15px 0;
+    margin-top: 15px;
+  }
+  nav.menu-aberto {
+    display: flex;
+    animation: slideDown 0.3s ease;
+  }
+  nav a {
+    text-align: center;
+    background-color: var(--cor-fundo-alt);
+  }
+  .grid-produtos {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+  #painel-carrinho {
+    width: 100vw;
+    max-width: 100vw;
+  }
+  .checkout-wrapper {
+    padding: 20px 15px;
+  }
 
-.btn-tentar-novamente:hover {
-  background-color: var(--cor-destaque-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 204, 0, 0.3);
-}
+  .hero-section {
+    flex-direction: column;
+    text-align: center;
+    padding: 30px 0;
+  }
+  .hero-titulo {
+    font-size: 2.5rem;
+  }
+  .hero-imagem img {
+    max-width: 300px;
+    margin-top: 30px;
+  }
 
-/* --- 52. LOADING SPINNER (para o botão "Finalizar") --- */
-.spinner {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  border: 2px solid rgba(26, 26, 26, 0.3);
-  border-top-color: var(--cor-fundo);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  vertical-align: middle;
-  margin-right: 8px;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+  .timeline::before {
+    left: 20px;
+  }
+  .timeline-item {
+    width: 100%;
+    left: 0 !important;
+    text-align: left !important;
+    padding-left: 50px;
+    padding-right: 0;
+  }
+  .timeline-item .timeline-dot {
+    left: 10px !important;
+    right: auto !important;
+  }
+  .sobre-hero-content h2 {
+    font-size: 2rem;
+  }
+  .cardapio-hero h2 {
+    font-size: 2rem;
   }
 }
 
-/* --- TOAST (Notificação Bonita) --- */
-.toast {
-  position: fixed;
-  top: -50px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: var(--cor-destaque);
-  color: var(--cor-fundo);
-  padding: 12px 24px;
-  border-radius: 50px;
-  font-weight: bold;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  z-index: 10000;
-  transition: top 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.toast.visivel {
-  top: 20px;
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+  .logo-texto .vh {
+    font-size: 1.5rem;
+  }
+  .logo-texto .burger {
+    font-size: 1rem;
+  }
+  h1 {
+    font-size: 1.6rem;
+  }
+  h2 {
+    font-size: 1.4rem;
+  }
+  .grid-produtos {
+    grid-template-columns: 1fr;
+  }
+  #btn-carrinho-flutuante {
+    padding: 10px 14px;
+    font-size: 1rem;
+    bottom: 15px;
+    left: 15px;
+  }
+  .botoes-form {
+    flex-direction: column;
+  }
+  .botoes-form button {
+    min-width: 100%;
+  }
+  .resumo-linha {
+    flex-direction: column;
+    gap: 3px;
+  }
+  #btn-tema {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    top: 10px;
+    right: 10px;
+  }
 }
