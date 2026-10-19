@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cardápio completo da VH Burger.">
+    <title>VH Burger - Cardápio</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="fundo-chef">
+
+    <header>
+        <!-- LOGO DA MARCA -->
+        <a href="index.html" class="logo" aria-label="Página inicial da VH Burger">
+            <div class="logo-icone">
+                <div class="pao-cima"></div>
+                <div class="carne"></div>
+                <div class="queijo"></div>
+                <div class="pao-baixo"></div>
+            </div>
+            <div class="logo-texto">
+                <span class="vh">VH</span>
+                <span class="burger">Burger</span>
+            </div>
+        </a>
+        <p id="saudacao-topo"></p>
+        <nav aria-label="Menu principal">
+            <a href="index.html">Home</a>
+            <a href="cardapio.html">Cardápio</a>
+            <a href="sobre.html">Sobre</a>
+            <a href="contato.html">Contato</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- BANNER DO CARDÁPIO -->
+        <section class="cardapio-hero">
+            <h2>Explore Nossos Sabores</h2>
+            <p>Temos opções para todos os gostos. Adicione ao carrinho e finalize em segundos.</p>
+        </section>
+
+        <!-- O GRID CONTINUA IGUAL (O JS PREENCHE) -->
+        <section class="cardapio-container">
+            <h2>Nosso Cardápio</h2>
+            <div id="grid-cardapio" class="grid-produtos">
+                <!-- Os cards são injetados pelo cardapio.ts -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>🕐 Hora atual: <span id="relogio">--:--:--</span></p>
+        <p><small>&copy; 2026 VH Burger. Todos os direitos reservados.</small></p>
+    </footer>
+
+    <script type="module" src="dist/main.js"></script>
+    <script type="module" src="dist/carrinho.js"></script>
+    <script type="module" src="dist/cardapio.js"></script>
+</body>
+
+</html>

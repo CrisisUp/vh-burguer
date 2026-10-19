@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VH Burger - A melhor hamburgueria artesanal da cidade.">
+    <title>VH Burger - Home</title>
+
+    <!-- Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="fundo-chef">
+
+    <!-- ===== CABEÇALHO ===== -->
+    <header>
+        <!-- LOGO DA MARCA -->
+        <a href="index.html" class="logo" aria-label="Página inicial da VH Burger">
+            <div class="logo-icone">
+                <div class="pao-cima"></div>
+                <div class="carne"></div>
+                <div class="queijo"></div>
+                <div class="pao-baixo"></div>
+            </div>
+            <div class="logo-texto">
+                <span class="vh">VH</span>
+                <span class="burger">Burger</span>
+            </div>
+        </a>
+        <p id="saudacao-topo"></p>
+        <nav aria-label="Menu principal">
+            <a href="index.html">Home</a>
+            <a href="cardapio.html">Cardápio</a>
+            <a href="sobre.html">Sobre</a>
+            <a href="contato.html">Contato</a>
+        </nav>
+    </header>
+
+    <!-- ===== HERO SECTION ===== -->
+    <main>
+        <section class="hero-section">
+            <div class="hero-content">
+                <h2 class="hero-titulo">O Verdadeiro Sabor do Artesanal</h2>
+                <p class="hero-subtitulo">Carne selecionada, pão fresquinho e muito amor em cada mordida.</p>
+                <a href="cardapio.html" class="btn-hero">🔥 Ver Cardápio</a>
+            </div>
+            <div class="hero-imagem">
+                <!-- Imagem de um hambúrguer gigante -->
+                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80"
+                    alt="Hambúrguer artesanal VH Burger">
+            </div>
+        </section>
+
+        <!-- ===== DESTAQUES DO CARDÁPIO ===== -->
+        <section class="destaques-section">
+            <h2>⭐ Os Mais Pedidos</h2>
+            <div class="destaques-grid">
+
+                <div class="card-destaque">
+                    <img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=400&q=80" alt="VH Bacon">
+                    <div class="card-destaque-info">
+                        <h3>VH Bacon</h3>
+                        <p>Blend 180g, cheddar, bacon crocante e molho barbecue.</p>
+                        <span class="preco">R$ 32,00</span>
+                    </div>
+                </div>
+
+                <div class="card-destaque">
+                    <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400&q=80"
+                        alt="VH Cheddar Duplo">
+                    <div class="card-destaque-info">
+                        <h3>VH Cheddar Duplo</h3>
+                        <p>Dois blends de 180g, cheddar cremoso e cebola caramelizada.</p>
+                        <span class="preco">R$ 35,00</span>
+                    </div>
+                </div>
+
+                <div class="card-destaque">
+                    <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80"
+                        alt="VH Clássico">
+                    <div class="card-destaque-info">
+                        <h3>VH Clássico</h3>
+                        <p>Pão brioche, blend 180g, queijo cheddar, alface e tomate.</p>
+                        <span class="preco">R$ 28,00</span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="center-btn">
+                <a href="cardapio.html" class="btn-secundario">Ver Todos os Hambúrgueres</a>
+            </div>
+        </section>
+
+        <!-- ===== DEPOIMENTOS (PROVA SOCIAL) ===== -->
+        <section class="depoimentos-section">
+            <h2>💬 O Que Nossos Clientes Dizem</h2>
+            <div class="depoimentos-grid">
+
+                <div class="depoimento">
+                    <div class="depoimento-aspas">“</div>
+                    <p>"O melhor hambúrguer que já comi na vida! O VH Bacon é simplesmente perfeito."</p>
+                    <div class="depoimento-autor">
+                        <span class="nome">— Maria Silva</span>
+                        <span class="estrelas">⭐⭐⭐⭐⭐</span>
+                    </div>
+                </div>
+
+                <div class="depoimento">
+                    <div class="depoimento-aspas">“</div>
+                    <p>"Atendimento impecável e comida deliciosa. O VH Veggie me surpreendeu!"</p>
+                    <div class="depoimento-autor">
+                        <span class="nome">— Carlos Andrade</span>
+                        <span class="estrelas">⭐⭐⭐⭐⭐</span>
+                    </div>
+                </div>
+
+                <div class="depoimento">
+                    <div class="depoimento-aspas">“</div>
+                    <p>"Peço toda semana! A entrega é rápida e o hambúrguer chega quentinho."</p>
+                    <div class="depoimento-autor">
+                        <span class="nome">— Ana Costa</span>
+                        <span class="estrelas">⭐⭐⭐⭐⭐</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== RODAPÉ ===== -->
+    <footer>
+        <p>🕐 Hora atual: <span id="relogio">--:--:--</span></p>
+        <p><small>&copy; 2026 VH Burger. Todos os direitos reservados.</small></p>
+    </footer>
+
+    <!-- Scripts Compilados -->
+    <script type="module" src="dist/main.js"></script>
+    <script type="module" src="dist/carrinho.js"></script>
+
+</body>
+
+</html>

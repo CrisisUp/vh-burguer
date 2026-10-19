@@ -1,0 +1,11 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "rootDir": ".",
+        "outDir": "./dist-tests",
+        "types": ["jest", "node"],
+        "sourceMap": true,
+        "inlineSources": true
+    },
+    "include": ["src/**/*", "tests/**/*"]
+}
